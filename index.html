@@ -1,0 +1,4339 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>建築寸法メモ</title>
+<meta content="建築学生向けの家具・水回り・階段・開口部・外構・構造寸法メモ。" name="description"/>
+<style>
+:root {
+  --bg: #f6f3ee;
+  --card: #fffaf2;
+  --text: #23201c;
+  --muted: #71675b;
+  --line: #e1d7c8;
+  --accent: #2f5f4f;
+  --accent-light: #dcece5;
+  --shadow: 0 12px 30px rgba(43, 36, 28, 0.08);
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+  background: radial-gradient(circle at top left, #fff8e9 0, #f6f3ee 38%, #eee9e1 100%);
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.app-header {
+  padding: 34px 18px 24px;
+  background: linear-gradient(135deg, #254f43, #5b7d69);
+  color: white;
+}
+
+.app-header > div,
+.container,
+.footer {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 1.05;
+}
+
+.lead {
+  margin: 12px 0 0;
+  max-width: 620px;
+  opacity: 0.92;
+}
+
+.container {
+  padding: 18px;
+}
+
+.search-card,
+.tool-card,
+.item-card {
+  background: rgba(255, 250, 242, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.search-card {
+  padding: 18px;
+  margin-top: -34px;
+  backdrop-filter: blur(12px);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.search-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 13px;
+  background: #fffdf8;
+  color: var(--text);
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 15px;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.06);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-top: 14px;
+}
+
+.chip {
+  white-space: nowrap;
+  background: #fffdf8;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  padding: 7px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.chip.active {
+  background: var(--accent);
+  color: white;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.tool-card {
+  padding: 17px;
+}
+
+.tool-card h2,
+.section-title h2,
+.item-card h3 {
+  margin: 0;
+}
+
+.tool-card p {
+  margin: 6px 0 12px;
+  color: var(--muted);
+}
+
+.calc-row {
+  display: grid;
+  grid-template-columns: 110px auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.result {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--accent) !important;
+}
+
+.saved {
+  min-height: 1.5em;
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+
+.section-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 2px 12px;
+}
+
+.section-title p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.item-card {
+  padding: 16px;
+  position: relative;
+}
+
+.item-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.item-card h3 {
+  font-size: 1.15rem;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 8px 0 12px;
+}
+
+.category,
+.fav-badge,
+.custom-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.category {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.fav-badge {
+  background: #fff2b8;
+  color: #7a5b00;
+}
+
+.custom-badge {
+  background: #eee8df;
+  color: #5f5549;
+}
+
+.fav-card {
+  border-color: #d6b552;
+}
+
+.star {
+  background: transparent;
+  color: #a88427;
+  border: 1px solid var(--line);
+  padding: 5px 8px;
+  font-size: 1.1rem;
+}
+
+.star.active {
+  background: #fff2b8;
+}
+
+.dim-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+  font-size: 0.92rem;
+}
+
+.dim-table th,
+.dim-table td {
+  padding: 8px 7px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.dim-table th {
+  color: var(--muted);
+  width: 34%;
+}
+
+.note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 26px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+.footer {
+  padding: 20px 18px 36px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.footer-links a {
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 820px) {
+  .tools-grid,
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .search-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.custom-card {
+  background: rgba(255, 250, 242, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 17px;
+  margin-bottom: 14px;
+}
+
+.custom-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.custom-form label {
+  margin: 0;
+}
+
+.custom-form .full {
+  grid-column: 1 / -1;
+}
+
+.custom-actions,
+.card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.custom-actions {
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.secondary {
+  background: #776d60;
+}
+
+.delete-btn {
+  background: #8a4c3e;
+  padding: 5px 9px;
+  font-size: 0.82rem;
+}
+
+.custom-title {
+  margin-top: 34px;
+}
+
+@media (max-width: 820px) {
+  .custom-form {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-form .full {
+    grid-column: auto;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.jump-add {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #fffaf2;
+  color: var(--accent);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 10px 24px rgba(20, 25, 20, 0.18);
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.jump-add:hover {
+  transform: translateY(-1px);
+}
+
+#customPreset {
+  scroll-margin-top: 86px;
+}
+
+@media (max-width: 820px) {
+  .jump-add {
+    top: auto;
+    right: 14px;
+    bottom: 14px;
+    padding: 10px 13px;
+    font-size: 0.88rem;
+  }
+
+  #customPreset {
+    scroll-margin-top: 18px;
+  }
+}
+
+.category-section {
+  grid-column: 1 / -1;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 250, 242, 0.74);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.category-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 0;
+  background: #fffaf2;
+  color: var(--text);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.category-header:hover {
+  filter: none;
+  background: #fff6e8;
+}
+
+.category-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.category-heading strong {
+  font-size: 1.05rem;
+}
+
+.category-count {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.category-toggle {
+  color: var(--accent);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.category-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 14px;
+}
+
+.category-section.collapsed .category-body {
+  display: none;
+}
+
+.category-section.collapsed .category-header {
+  border-bottom: 0;
+}
+
+@media (max-width: 820px) {
+  .category-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.view-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 55;
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  border-radius: 16px;
+  background: #fffaf2;
+  color: var(--accent);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 10px 24px rgba(20, 25, 20, 0.18);
+  display: grid;
+  place-items: center;
+}
+
+.view-icon.one {
+  width: 23px;
+  height: 23px;
+  border: 3px solid var(--accent);
+  border-radius: 5px;
+  display: none;
+}
+
+.view-icon.four {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.view-icon.four i {
+  display: block;
+  border: 3px solid var(--accent);
+  border-radius: 4px;
+}
+
+.view-toggle.large-active .view-icon.one {
+  display: block;
+}
+
+.view-toggle.large-active .view-icon.four {
+  display: none;
+}
+
+.view-large .category-body {
+  grid-template-columns: 1fr;
+}
+
+.view-large .item-card {
+  padding: 18px;
+}
+
+.view-large .dim-table {
+  font-size: 1rem;
+}
+
+.view-grid .category-body {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 820px) {
+  .jump-add {
+    bottom: 82px;
+  }
+
+  .view-toggle {
+    right: 14px;
+    bottom: 14px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .view-grid .category-body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .view-grid .item-card {
+    padding: 12px;
+  }
+
+  .view-grid .item-card h3 {
+    font-size: 1rem;
+  }
+
+  .view-grid .dim-table {
+    font-size: 0.82rem;
+  }
+
+  .view-grid .note {
+    font-size: 0.84rem;
+  }
+
+  .view-large .category-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .view-grid .category-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    padding: 9px;
+  }
+
+  .view-grid .dim-table th,
+  .view-grid .dim-table td {
+    padding: 6px 5px;
+  }
+
+  .view-grid .tag-row {
+    gap: 5px;
+  }
+
+  .view-grid .category,
+  .view-grid .fav-badge,
+  .view-grid .custom-badge {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+  }
+}
+
+.list-tools {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: -2px 2px 14px;
+}
+
+.list-tools button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 26, 22, 0.46);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 80;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-window {
+  width: min(560px, 100%);
+  max-height: min(80vh, 760px);
+  overflow: auto;
+  background: #fffaf2;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 22px 48px rgba(24, 23, 20, 0.22);
+  padding: 18px;
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.modal-close {
+  background: #8a4c3e;
+  padding: 8px 12px;
+  min-width: 42px;
+}
+
+.modal-note {
+  margin: 8px 0 14px;
+  color: var(--muted);
+}
+
+.modal-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.modal-list button {
+  text-align: left;
+  background: #fffdf8;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 13px;
+  box-shadow: none;
+}
+
+.modal-list button:hover {
+  background: #fff6e8;
+}
+
+.modal-list button strong {
+  display: block;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.modal-list button span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 820px) {
+  .modal-window {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .modal-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-overlay {
+  cursor: pointer;
+}
+
+.modal-window {
+  cursor: default;
+}
+
+.modal-close {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  pointer-events: auto;
+}
+
+.modal-window {
+  pointer-events: auto;
+}
+
+.modal-close {
+  pointer-events: auto;
+}
+
+.floating-category {
+  position: fixed;
+  right: 82px;
+  bottom: 16px;
+  z-index: 55;
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  border-radius: 16px;
+  background: #fffaf2;
+  color: var(--accent);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 10px 24px rgba(20, 25, 20, 0.18);
+  display: grid;
+  place-items: center;
+}
+
+.category-icon {
+  width: 27px;
+  height: 24px;
+  display: grid;
+  gap: 4px;
+}
+
+.category-icon i {
+  display: block;
+  height: 5px;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+}
+
+.floating-category:hover,
+.view-toggle:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 820px) {
+  .floating-category {
+    right: 78px;
+    bottom: 14px;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+.calc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calc-select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 13px;
+  background: #fffdf8;
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+}
+
+.calc-fields {
+  display: grid;
+  gap: 10px;
+}
+
+.calc-field {
+  margin: 0;
+}
+
+.calc-field span {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+
+.calc-input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.calc-input-row em {
+  min-width: 62px;
+  color: var(--muted);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.calc-answer {
+  margin-top: 4px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fffdf8;
+}
+
+.calc-answer h3 {
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.calc-answer table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calc-answer th,
+.calc-answer td {
+  border-top: 1px solid var(--line);
+  padding: 9px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.calc-answer th {
+  width: 34%;
+  color: var(--muted);
+}
+
+.mini-select {
+  padding: 11px 12px;
+  font-size: 0.95rem;
+}
+
+.collapsible-tool {
+  padding: 0;
+  overflow: hidden;
+}
+
+.tool-toggle {
+  width: 100%;
+  border-radius: 0;
+  background: #fffaf2;
+  color: var(--text);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.tool-toggle:hover {
+  filter: none;
+  background: #fff6e8;
+}
+
+.tool-toggle span {
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.tool-toggle-mark {
+  color: var(--accent);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.tool-body {
+  padding: 17px;
+}
+
+.tool-collapsed .tool-body {
+  display: none;
+}
+
+.tool-collapsed .tool-toggle {
+  border-bottom: 0;
+}
+
+
+.restore-btn {
+  background: #5f6f8a;
+  padding: 5px 9px;
+  font-size: 0.82rem;
+}
+
+.header-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.header-links a {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.header-links a:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.footer-links a {
+  display: inline-block;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: var(--accent-light);
+}
+
+.study-note-links {
+  background: rgba(255, 250, 242, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 17px;
+  margin: 18px 0 0;
+}
+
+.study-note-links h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.study-note-links p {
+  margin: 6px 0 12px;
+  color: var(--muted);
+}
+
+.study-note-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.study-note-list a {
+  display: inline-block;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.study-note-list a:hover {
+  filter: brightness(0.98);
+  text-decoration: underline;
+}
+
+</style>
+</head>
+<body>
+<a class="jump-add" href="#customPreset">＋ プリセット追加</a>
+<button aria-label="カテゴリ一覧" class="floating-category" id="openCategoryModal" title="カテゴリ一覧" type="button">
+<span aria-hidden="true" class="category-icon">
+<i></i><i></i><i></i>
+</span>
+</button>
+<button aria-label="表示サイズ切り替え" class="view-toggle" id="viewToggle" title="表示サイズ切り替え" type="button">
+<span aria-hidden="true" class="view-icon one"></span>
+<span aria-hidden="true" class="view-icon four">
+<i></i><i></i><i></i><i></i>
+</span>
+</button>
+<header class="app-header">
+<div>
+<p class="eyebrow">建築学生向け</p>
+<h1>建築寸法メモ</h1>
+<p class="lead">設計課題でよく使う寸法を、最低・標準・ゆったりでサッと確認。</p>
+<nav aria-label="サイト情報" class="header-links"><a href="index.html">トップ</a>
+<a href="about.html">このサイトについて</a>
+<a href="privacy.html">プライバシーポリシー</a>
+<a href="disclaimer.html">免責事項</a>
+<a href="contact.html">お問い合わせ</a>
+</nav>
+</div>
+</header>
+<main class="container">
+<section class="search-card">
+<label for="searchInput">寸法を検索</label>
+<div class="search-row">
+<input autocomplete="off" id="searchInput" placeholder="例：ソファ、階段、トイレ、キッチン" type="search"/>
+<button id="clearSearch" type="button">消す</button>
+</div>
+<div class="chips" id="categoryChips"></div>
+</section>
+<section class="tools-grid">
+<article class="tool-card calc-card collapsible-tool" data-tool="calculator">
+<button class="tool-toggle" onclick="toggleToolCard('calculator')" type="button">
+<span>建築電卓</span><strong class="tool-toggle-mark" id="calculatorMark">閉じる</strong>
+</button>
+<div class="tool-body" id="calculatorBody">
+<p>モジュール・勾配・面積・図面スケール・階段をざっくり計算。</p>
+<label for="calcPreset">計算プリセット</label>
+<select class="calc-select" id="calcPreset">
+<option selected="" value="stair">階段ざっくり</option>
+<option value="module">910モジュール換算</option>
+<option value="slopeRise">勾配から高さ</option>
+<option value="slopeSun">高さから寸勾配</option>
+<option value="roofHigh">屋根最高高さ</option>
+<option value="area">面積 → 坪・畳</option>
+<option value="scale">実寸 → 図面寸法</option>
+</select>
+<div class="calc-fields" id="calcFields"></div>
+<div class="calc-answer" id="calcAnswer"></div>
+</div>
+</article>
+<article class="tool-card collapsible-tool" data-tool="memo">
+<button class="tool-toggle" onclick="toggleToolCard('memo')" type="button">
+<span>自分メモ</span><strong class="tool-toggle-mark" id="memoMark">閉じる</strong>
+</button>
+<div class="tool-body" id="memoBody">
+<p>よく使う寸法を保存できます。この端末内だけに残ります。</p>
+<textarea id="memoInput" placeholder="例：自分の設計では廊下幅1000で統一" rows="4"></textarea>
+<button id="saveMemo" type="button">保存</button>
+<p class="saved" id="saveStatus"></p>
+</div>
+</article>
+</section>
+<section class="section-title">
+<h2>寸法一覧</h2>
+<p id="hitCount"></p>
+</section>
+<section class="list-tools">
+<button class="secondary" id="openAllCategories" type="button">全部開く</button>
+<button class="secondary" id="closeAllCategories" type="button">全部閉じる</button>
+<button class="secondary" id="priorityOnlyCategories" type="button">優先度高めだけ開く</button>
+</section>
+<section aria-live="polite" class="items-grid" id="items"></section>
+<section class="section-title custom-title" id="customPreset">
+<h2>追加寸法</h2>
+<p>追加した寸法は上の寸法一覧に表示され、お気に入りなら先頭に来ます。</p>
+</section>
+<section class="custom-card">
+<div class="custom-form">
+<label>
+          名前
+          <input id="customName" placeholder="例：カフェカウンター" type="text"/>
+</label>
+<label>
+          カテゴリ
+          <input id="customCategory" placeholder="例：家具、店舗、外構" type="text"/>
+</label>
+<label>
+          最低寸法
+          <input id="customMin" placeholder="例：幅1200 / 奥行450 / H700" type="text"/>
+</label>
+<label>
+          標準寸法
+          <input id="customStandard" placeholder="例：幅1800 / 奥行500 / H720" type="text"/>
+</label>
+<label>
+          ゆったり寸法
+          <input id="customRoomy" placeholder="例：幅2400 / 奥行600" type="text"/>
+</label>
+<label class="full">
+          メモ
+          <textarea id="customNote" placeholder="例：窓際に置くなら通路幅も見る" rows="3"></textarea>
+</label>
+</div>
+<div class="custom-actions">
+<button id="addCustom" type="button">追加する</button>
+<button class="secondary" id="clearCustomForm" type="button">入力を消す</button>
+</div>
+<p class="saved" id="customStatus"></p>
+</section>
+
+<section class="study-note-links" aria-label="建築学生向けメモ">
+  <h2>建築学生向けメモ</h2>
+  <p>寸法の使い方や、図面で迷いやすい部分を短くまとめています。</p>
+  <div class="study-note-list">
+    <a href="koyagumi.html">小屋組の寸法まとめ</a>
+    <a href="stairs.html">住宅階段の寸法まとめ</a>
+    <a href="water.html">水回り寸法まとめ</a>
+    <a href="section.html">木造断面図で描く部材まとめ</a>
+    <a href="furniture.html">家具寸法まとめ</a>
+    <a href="module.html">910モジュールの使い方</a>
+    <a href="window.html">開口部・窓寸法まとめ</a>
+    <a href="storage.html">収納寸法まとめ</a>
+  </div>
+</section>
+
+</main>
+<footer class="footer">
+<p>※授業課題・法規確認では、必ず先生の指示や法令集も確認してください。</p>
+<nav aria-label="フッターリンク" class="footer-links"><a href="index.html">トップ</a>
+<a href="about.html">このサイトについて</a>
+<a href="privacy.html">プライバシーポリシー</a>
+<a href="disclaimer.html">免責事項</a>
+<a href="contact.html">お問い合わせ</a>
+</nav>
+</footer>
+<script>
+
+
+
+
+
+
+
+
+
+const dimensions = [
+  {
+    id: "sofa",
+    category: "家具",
+    name: "ソファ",
+    min: "幅1400 / 奥行750 / 座面H380",
+    standard: "幅1600〜2000 / 奥行800〜900 / 座面H400",
+    roomy: "幅2200〜2600 / 奥行900〜1000",
+    note: "リビングでは前に600以上、できれば800ほど空けると動きやすい。"
+  },
+  {
+    id: "low-table",
+    category: "家具",
+    name: "ローテーブル",
+    min: "幅800 / 奥行400 / H350",
+    standard: "幅900〜1200 / 奥行450〜600 / H380",
+    roomy: "幅1200〜1400 / 奥行600",
+    note: "ソファ座面より少し低めにすると使いやすい。"
+  },
+  {
+    id: "dining",
+    category: "家具",
+    name: "ダイニングテーブル",
+    min: "2人：幅800 / 奥行750 / H700",
+    standard: "4人：幅1400 / 奥行800〜850 / H700〜720",
+    roomy: "6人：幅1800 / 奥行850〜900",
+    note: "椅子を引く後ろは最低600、余裕を見るなら800〜900。"
+  },
+  {
+    id: "chair",
+    category: "家具",
+    name: "椅子",
+    min: "幅450 / 奥行450 / 座面H400",
+    standard: "幅500 / 奥行500 / 座面H420",
+    roomy: "幅550〜600 / 奥行550",
+    note: "机高さ700前後なら座面高さは400〜430が合わせやすい。"
+  },
+  {
+    id: "study-desk",
+    category: "家具",
+    name: "勉強机",
+    min: "幅900 / 奥行500 / H700",
+    standard: "幅1000〜1200 / 奥行600 / H700〜720",
+    roomy: "幅1400 / 奥行650",
+    note: "本棚やPCを置くなら奥行600以上が楽。"
+  },
+  {
+    id: "kitchen",
+    category: "水回り",
+    name: "キッチン",
+    min: "幅1800 / 奥行600 / H800",
+    standard: "幅2400〜2550 / 奥行650 / H850",
+    roomy: "幅2700以上 / 通路900〜1000",
+    note: "背面収納との間は900以上あると作業しやすい。"
+  },
+  {
+    id: "toilet",
+    category: "水回り",
+    name: "トイレ個室",
+    min: "幅800 / 奥行1200",
+    standard: "幅900 / 奥行1500",
+    roomy: "幅1000 / 奥行1800",
+    note: "手洗いや収納を入れるなら奥行1500以上が描きやすい。"
+  },
+  {
+    id: "washbasin",
+    category: "水回り",
+    name: "洗面台",
+    min: "幅600 / 奥行500 / H750",
+    standard: "幅750〜900 / 奥行550 / H800",
+    roomy: "幅1200 / 奥行600",
+    note: "脱衣室は洗濯機と合わせて最低2畳、余裕なら3畳以上。"
+  },
+  {
+    id: "bath",
+    category: "水回り",
+    name: "浴室",
+    min: "1216サイズ：1200×1600",
+    standard: "1616サイズ：1600×1600",
+    roomy: "1620サイズ：1600×2000",
+    note: "住宅課題では1616を置くと無難。"
+  },
+  {
+    id: "stairs",
+    category: "階段",
+    name: "住宅階段",
+    min: "幅750 / 蹴上200前後 / 踏面210以上",
+    standard: "幅900 / 蹴上180〜200 / 踏面230〜240",
+    roomy: "幅1000 / 蹴上170〜180 / 踏面250",
+    note: "設計課題では幅900〜1000にすると図面が見やすい。"
+  },
+  {
+    id: "corridor",
+    category: "動線",
+    name: "廊下",
+    min: "幅780〜800",
+    standard: "幅910",
+    roomy: "幅1000〜1200",
+    note: "910モジュールなら芯々910、実際の有効幅は壁厚ぶん狭くなる。"
+  },
+  {
+    id: "entrance",
+    category: "動線",
+    name: "玄関土間",
+    min: "幅900 / 奥行900",
+    standard: "幅1200〜1600 / 奥行1200",
+    roomy: "幅1800 / 奥行1500以上",
+    note: "靴箱を置くなら幅・奥行に収納分を足す。"
+  },
+  {
+    id: "sliding-window",
+    category: "開口部",
+    name: "掃き出し窓",
+    min: "幅1600 / H1800",
+    standard: "幅1800 / H2000〜2100",
+    roomy: "幅2400〜2700 / H2200",
+    note: "テラスや縁側に出る場所は幅1800以上が扱いやすい。"
+  },
+  {
+    id: "window",
+    category: "開口部",
+    name: "腰窓",
+    min: "幅900 / H700 / 下端H900",
+    standard: "幅1200〜1600 / H800〜1000 / 下端H900",
+    roomy: "幅1800 / H1000",
+    note: "机を下に置くなら下端H900前後が使いやすい。"
+  },
+  {
+    id: "engawa",
+    category: "外構",
+    name: "縁側・テラス幅",
+    min: "幅910",
+    standard: "幅1365〜1820",
+    roomy: "幅2000以上",
+    note: "座るだけなら910、通る＋座るなら1365以上あると楽。"
+  },
+  {
+    id: "handrail",
+    category: "外構",
+    name: "手すり",
+    min: "H1100",
+    standard: "H1100〜1200",
+    roomy: "H1200以上",
+    note: "バルコニーなど転落防止では1.1m以上を目安に確認。"
+  },
+  {
+    id: "column",
+    category: "構造",
+    name: "木造柱",
+    min: "105×105",
+    standard: "120×120",
+    roomy: "150×150",
+    note: "設計課題で大きめに見せるなら150角も使いやすい。"
+  },
+  {
+    id: "beam",
+    category: "構造",
+    name: "梁・横架材メモ",
+    min: "梁せいはスパンや荷重で変わる",
+    standard: "図面では梁幅105〜150程度で表現",
+    roomy: "大スパンは構造計算・先生確認",
+    note: "寸法表だけで決めず、伏図・断面図・荷重条件と合わせて考える。"
+  },
+{
+    "id": "closet",
+    "category": "収納",
+    "name": "クローゼット",
+    "min": "奥行550 / 幅900",
+    "standard": "奥行600 / 幅1200〜1800",
+    "roomy": "奥行650 / 幅1800以上",
+    "note": "ハンガー収納は奥行600を目安にすると服が納まりやすい。"
+},
+{
+    "id": "oshiire",
+    "category": "収納",
+    "name": "押入れ",
+    "min": "奥行750 / 幅900",
+    "standard": "奥行900 / 幅1800",
+    "roomy": "奥行900 / 幅2700",
+    "note": "布団収納を想定するなら奥行900が使いやすい。"
+},
+{
+    "id": "bookshelf",
+    "category": "収納",
+    "name": "本棚",
+    "min": "奥行250 / 幅600 / H900",
+    "standard": "奥行300〜350 / 幅900 / H1800",
+    "roomy": "奥行350 / 幅1200以上 / H2100",
+    "note": "廊下や机まわりに置くなら、前の通路幅も一緒に見る。"
+},
+{
+    "id": "shoe-storage",
+    "category": "収納",
+    "name": "玄関収納",
+    "min": "奥行300 / 幅600",
+    "standard": "奥行350〜400 / 幅900〜1800",
+    "roomy": "奥行400 / 幅1800以上",
+    "note": "土間に置く場合は、人が立つスペースを残す。"
+},
+{
+    "id": "pantry",
+    "category": "収納",
+    "name": "パントリー",
+    "min": "棚奥行300 / 通路幅750",
+    "standard": "棚奥行300〜450 / 通路幅800〜900",
+    "roomy": "棚奥行450 / 通路幅1000以上",
+    "note": "食品棚は奥行が深すぎると奥が見えにくい。"
+},
+{
+    "id": "kids-room",
+    "category": "部屋広さ",
+    "name": "子ども部屋",
+    "min": "約4.5畳 / 2700×2700程度",
+    "standard": "5〜6畳 / 2700×3600程度",
+    "roomy": "6〜8畳 / 3600×3600以上",
+    "note": "ベッド・机・収納を置くなら6畳あるとまとめやすい。"
+},
+{
+    "id": "bedroom",
+    "category": "部屋広さ",
+    "name": "寝室",
+    "min": "6畳 / ベッド横通路500",
+    "standard": "6〜8畳 / ベッド横通路600〜700",
+    "roomy": "8畳以上 / 収納や作業机も配置可",
+    "note": "ダブルベッドを置くなら周囲の通路を先に確保する。"
+},
+{
+    "id": "ldk",
+    "category": "部屋広さ",
+    "name": "LDK",
+    "min": "12畳程度",
+    "standard": "16〜20畳",
+    "roomy": "20畳以上",
+    "note": "家具寸法だけでなく、椅子を引く寸法と通路幅も見る。"
+},
+{
+    "id": "study-room",
+    "category": "部屋広さ",
+    "name": "書斎",
+    "min": "約2畳 / 1800×1800",
+    "standard": "3畳 / 1800×2700",
+    "roomy": "4.5畳以上",
+    "note": "机奥行600、本棚奥行300を入れると必要幅が見えやすい。"
+},
+{
+    "id": "wic",
+    "category": "部屋広さ",
+    "name": "WIC",
+    "min": "1800×1800程度",
+    "standard": "2〜3畳",
+    "roomy": "3畳以上 / 通路900以上",
+    "note": "両側収納にするなら中央通路を800〜900は確保したい。"
+},
+{
+    "id": "single-bed",
+    "category": "ベッド",
+    "name": "シングルベッド",
+    "min": "約970×1950",
+    "standard": "1000×2000程度",
+    "roomy": "周囲通路600以上",
+    "note": "子ども部屋では机・収納との干渉を先に見る。"
+},
+{
+    "id": "semi-double-bed",
+    "category": "ベッド",
+    "name": "セミダブルベッド",
+    "min": "約1200×1950",
+    "standard": "1200〜1250×2000",
+    "roomy": "片側通路600以上",
+    "note": "一人でゆったり使う寝室に置きやすい。"
+},
+{
+    "id": "double-bed",
+    "category": "ベッド",
+    "name": "ダブルベッド",
+    "min": "約1400×1950",
+    "standard": "1400〜1450×2000",
+    "roomy": "両側通路600以上",
+    "note": "寝室6畳だと収納や扉位置に注意。"
+},
+{
+    "id": "bed-side-aisle",
+    "category": "ベッド",
+    "name": "ベッド横通路",
+    "min": "500",
+    "standard": "600〜700",
+    "roomy": "800以上",
+    "note": "ベッドメイクや収納扉の開閉を考えると600以上が楽。"
+},
+{
+    "id": "person-aisle",
+    "category": "動作寸法",
+    "name": "人が通る幅",
+    "min": "600",
+    "standard": "750〜900",
+    "roomy": "1000以上",
+    "note": "家具横やベッド横の最低通路は600を目安にする。"
+},
+{
+    "id": "passing-aisle",
+    "category": "動作寸法",
+    "name": "人がすれ違う幅",
+    "min": "900",
+    "standard": "1000〜1200",
+    "roomy": "1200以上",
+    "note": "廊下やキッチン通路で人が重なる場所に使う。"
+},
+{
+    "id": "wheelchair-turn",
+    "category": "動作寸法",
+    "name": "車椅子回転",
+    "min": "直径1400",
+    "standard": "直径1500",
+    "roomy": "直径1600以上",
+    "note": "バリアフリーを考える水回りや玄関で確認したい寸法。"
+},
+{
+    "id": "kitchen-aisle",
+    "category": "動作寸法",
+    "name": "キッチン通路",
+    "min": "800",
+    "standard": "900〜1000",
+    "roomy": "1100〜1200",
+    "note": "背面収納や冷蔵庫の前は開閉寸法も考える。"
+},
+{
+    "id": "chair-back",
+    "category": "動作寸法",
+    "name": "椅子を引く後ろ",
+    "min": "600",
+    "standard": "800",
+    "roomy": "900以上",
+    "note": "ダイニングテーブルの周りでかなり大事な余白。"
+},
+{
+    "id": "swing-door",
+    "category": "建具",
+    "name": "片開きドア",
+    "min": "幅700 / H2000",
+    "standard": "幅750〜800 / H2000",
+    "roomy": "幅850〜900 / H2100",
+    "note": "開き勝手と家具の干渉を平面図で確認する。"
+},
+{
+    "id": "sliding-door",
+    "category": "建具",
+    "name": "引き戸",
+    "min": "幅700 / H2000",
+    "standard": "幅750〜900 / H2000",
+    "roomy": "幅900以上 / H2100",
+    "note": "水回りや狭い部屋では開き戸より納まりやすい。"
+},
+{
+    "id": "front-door",
+    "category": "建具",
+    "name": "玄関ドア",
+    "min": "幅800 / H2000",
+    "standard": "幅850〜900 / H2000〜2200",
+    "roomy": "親子扉 幅1200以上",
+    "note": "玄関土間やポーチ幅も一緒に見る。"
+},
+{
+    "id": "interior-sliding",
+    "category": "建具",
+    "name": "室内引き違い戸",
+    "min": "幅1600 / H2000",
+    "standard": "幅1700〜1800 / H2000",
+    "roomy": "幅2400 / H2100",
+    "note": "和室やLDKの間仕切りに使いやすい。"
+},
+{
+    "id": "ceiling-height",
+    "category": "高さ",
+    "name": "天井高",
+    "min": "H2400",
+    "standard": "H2500〜2700",
+    "roomy": "H2800以上",
+    "note": "設計課題では2700にすると開放感を出しやすい。"
+},
+{
+    "id": "window-sill-height",
+    "category": "高さ",
+    "name": "窓下端高さ",
+    "min": "H800",
+    "standard": "腰窓H900 / 机前H900前後",
+    "roomy": "眺望重視なら低めも検討",
+    "note": "机やベッドを窓下に置く場合は家具高さと合わせる。"
+},
+{
+    "id": "counter-height",
+    "category": "高さ",
+    "name": "カウンター高さ",
+    "min": "座る：H700",
+    "standard": "座る：H700〜720 / 立作業：H850〜900",
+    "roomy": "ハイカウンター：H1000前後",
+    "note": "椅子を使うか、立って使うかで高さが変わる。"
+},
+{
+    "id": "stair-handrail-height",
+    "category": "高さ",
+    "name": "階段手すり高さ",
+    "min": "H750",
+    "standard": "H800〜850",
+    "roomy": "H850〜900",
+    "note": "踏面先端からの高さとして考える。"
+},
+{
+    "id": "switch-height",
+    "category": "高さ",
+    "name": "スイッチ高さ",
+    "min": "H1000",
+    "standard": "H1100〜1200",
+    "roomy": "使う人に合わせて調整",
+    "note": "ドア横に置く場合は開き勝手と干渉しない位置にする。"
+},
+{
+    "id": "outlet-height",
+    "category": "高さ",
+    "name": "コンセント高さ",
+    "min": "H200",
+    "standard": "H250〜300",
+    "roomy": "机上用：H900〜1100",
+    "note": "机まわりやキッチンでは使う家電の高さに合わせる。"
+},
+{
+    "id": "parking-car",
+    "category": "外構・駐車",
+    "name": "普通車駐車場",
+    "min": "2500×5000",
+    "standard": "2700×5000〜5500",
+    "roomy": "3000×5500以上",
+    "note": "乗り降りやドア開閉を考えると幅2700以上が使いやすい。"
+},
+{
+    "id": "parking-kei",
+    "category": "外構・駐車",
+    "name": "軽自動車駐車場",
+    "min": "2200×4000",
+    "standard": "2400×4500",
+    "roomy": "2500×5000",
+    "note": "道路からの出入り方向も平面で確認する。"
+},
+{
+    "id": "bicycle-space",
+    "category": "外構・駐車",
+    "name": "自転車置き場",
+    "min": "1台：600×1800",
+    "standard": "1台：700×1900",
+    "roomy": "複数台なら通路800以上",
+    "note": "屋根付きにするなら柱位置と出し入れ寸法を見る。"
+},
+{
+    "id": "approach",
+    "category": "外構・駐車",
+    "name": "アプローチ幅",
+    "min": "900",
+    "standard": "1000〜1200",
+    "roomy": "1500以上",
+    "note": "玄関前で人がすれ違うなら1200以上あると自然。"
+},
+{
+    "id": "slope",
+    "category": "外構・駐車",
+    "name": "スロープ",
+    "min": "勾配1/12目安",
+    "standard": "幅900〜1200 / 踊り場も検討",
+    "roomy": "幅1500 / 勾配ゆるめ",
+    "note": "高低差が大きいと必要長さがかなり伸びる。"
+},
+{
+    "id": "planting-strip",
+    "category": "外構・駐車",
+    "name": "植栽帯",
+    "min": "幅300",
+    "standard": "幅450〜600",
+    "roomy": "幅900以上",
+    "note": "低木や目隠しを入れるなら600以上あると表現しやすい。"
+},
+{
+    "id": "wall-thickness",
+    "category": "図面表現",
+    "name": "壁厚",
+    "min": "木造：100前後",
+    "standard": "木造：120〜150",
+    "roomy": "外壁・断熱表現込み：150以上",
+    "note": "平面図では柱芯や壁芯との関係をそろえる。"
+},
+{
+    "id": "floor-thickness",
+    "category": "図面表現",
+    "name": "床厚",
+    "min": "200〜300",
+    "standard": "300〜500",
+    "roomy": "構造・断熱・天井懐込みで500以上",
+    "note": "断面図では梁せいや天井懐も含めて表現すると伝わりやすい。"
+},
+{
+    "id": "roof-thickness",
+    "category": "図面表現",
+    "name": "屋根厚",
+    "min": "150",
+    "standard": "200〜250",
+    "roomy": "断熱・垂木表現込みで250以上",
+    "note": "屋根勾配線と厚みの向きを間違えないようにする。"
+},
+{
+    "id": "eaves-depth",
+    "category": "図面表現",
+    "name": "軒の出",
+    "min": "300",
+    "standard": "450〜600",
+    "roomy": "750〜900",
+    "note": "雨よけや外観の陰影を出したいときに効く。"
+},
+{
+    "id": "canopy-depth",
+    "category": "図面表現",
+    "name": "庇の出",
+    "min": "300",
+    "standard": "450〜600",
+    "roomy": "900以上",
+    "note": "玄関や窓上に付けるときは開口幅とのバランスを見る。"
+},
+{
+    "id": "foundation-height",
+    "category": "図面表現",
+    "name": "基礎立ち上がり",
+    "min": "GL＋300",
+    "standard": "GL＋400前後",
+    "roomy": "GL＋450〜500",
+    "note": "1階床高や土台位置と一緒に断面図で整理する。"
+},
+{
+    "id": "cafe-counter-seat",
+    "category": "店舗・カフェ",
+    "name": "カフェカウンター席",
+    "min": "奥行450 / H700",
+    "standard": "奥行500〜600 / H700〜720",
+    "roomy": "奥行650 / 1人幅600以上",
+    "note": "窓際カウンターなら1人あたり幅600を見ておくと座りやすい。"
+},
+{
+    "id": "bar-counter",
+    "category": "店舗・カフェ",
+    "name": "ハイカウンター",
+    "min": "H950 / 奥行400",
+    "standard": "H1000〜1050 / 奥行450〜500",
+    "roomy": "H1050 / 奥行550以上",
+    "note": "ハイチェアを使うなら座面高さ650〜750程度と合わせる。"
+},
+{
+    "id": "cafe-two-seat",
+    "category": "店舗・カフェ",
+    "name": "カフェ2人席",
+    "min": "テーブル600×600",
+    "standard": "テーブル700×700 / 周囲通路600以上",
+    "roomy": "テーブル800×800 / 周囲通路800以上",
+    "note": "小さいカフェなら700角を基準にすると席数を取りやすい。"
+},
+{
+    "id": "cafe-four-seat",
+    "category": "店舗・カフェ",
+    "name": "カフェ4人席",
+    "min": "テーブル1200×700",
+    "standard": "テーブル1200〜1400×750〜800",
+    "roomy": "テーブル1500×850",
+    "note": "椅子を引く後ろ600〜800を忘れると通路が詰まる。"
+},
+{
+    "id": "cafe-seat-pitch",
+    "category": "店舗・カフェ",
+    "name": "客席ピッチ",
+    "min": "テーブル間600",
+    "standard": "テーブル間800〜900",
+    "roomy": "テーブル間1000以上",
+    "note": "店内を人が通る場所は900以上あると動線がきれい。"
+},
+{
+    "id": "cash-register",
+    "category": "店舗・カフェ",
+    "name": "レジ台",
+    "min": "幅600 / 奥行450 / H850",
+    "standard": "幅900〜1200 / 奥行500〜600 / H850〜900",
+    "roomy": "幅1500以上 / 荷物置き付き",
+    "note": "注文待ちの人が立つスペースを前に900以上見るとよい。"
+},
+{
+    "id": "display-shelf",
+    "category": "店舗・カフェ",
+    "name": "商品陳列棚",
+    "min": "奥行300 / H900",
+    "standard": "奥行350〜450 / H1200〜1500",
+    "roomy": "奥行450 / H1800",
+    "note": "見せる棚は高すぎると圧迫感が出るので空間に合わせる。"
+},
+{
+    "id": "cafe-kitchen-aisle",
+    "category": "店舗・カフェ",
+    "name": "厨房通路",
+    "min": "800",
+    "standard": "900〜1000",
+    "roomy": "1100〜1200",
+    "note": "複数人で作業するなら1000以上あるとぶつかりにくい。"
+},
+{
+    "id": "backyard",
+    "category": "店舗・カフェ",
+    "name": "バックヤード",
+    "min": "2畳程度",
+    "standard": "3〜4畳",
+    "roomy": "5畳以上",
+    "note": "在庫・掃除道具・スタッフ動線をまとめる場所として見る。"
+},
+{
+    "id": "waiting-space",
+    "category": "店舗・カフェ",
+    "name": "待合スペース",
+    "min": "幅900 / 奥行600",
+    "standard": "幅1200〜1800 / 奥行900",
+    "roomy": "ベンチ付きで奥行1200以上",
+    "note": "入口やレジ前で動線をふさがない位置に置く。"
+},
+{
+    "id": "cafe-toilet-front",
+    "category": "店舗・カフェ",
+    "name": "トイレ前スペース",
+    "min": "900×900",
+    "standard": "1200×1200",
+    "roomy": "1500×1500",
+    "note": "人が待つ・扉を開ける・手洗いへ行く動線をまとめて考える。"
+},
+{
+    "id": "terrace-seat",
+    "category": "店舗・カフェ",
+    "name": "テラス席",
+    "min": "2人席＋通路で幅1800程度",
+    "standard": "テーブル周り通路800以上",
+    "roomy": "通路1000以上 / 植栽帯付き",
+    "note": "屋外は椅子の引き寸法と軒・庇の出を一緒に見る。"
+},
+{
+    "id": "washing-machine",
+    "category": "住宅設備",
+    "name": "洗濯機",
+    "min": "幅600 / 奥行600",
+    "standard": "幅640 / 奥行640 / 防水パン640角",
+    "roomy": "幅750 / 奥行750",
+    "note": "上部収納や洗濯動線を考えるなら前の空き600以上。"
+},
+{
+    "id": "fridge",
+    "category": "住宅設備",
+    "name": "冷蔵庫",
+    "min": "幅600 / 奥行650",
+    "standard": "幅650〜700 / 奥行700",
+    "roomy": "幅750〜800 / 奥行750",
+    "note": "扉の開きと搬入経路を忘れずに見る。"
+},
+{
+    "id": "cupboard",
+    "category": "住宅設備",
+    "name": "食器棚・カップボード",
+    "min": "奥行350 / 幅900",
+    "standard": "奥行450 / 幅1200〜1800",
+    "roomy": "奥行500 / 幅1800以上",
+    "note": "キッチン背面に置くならキッチン通路900〜1000を確保。"
+},
+{
+    "id": "microwave-shelf",
+    "category": "住宅設備",
+    "name": "電子レンジ棚",
+    "min": "幅500 / 奥行400",
+    "standard": "幅600 / 奥行450",
+    "roomy": "幅750 / 奥行500",
+    "note": "レンジ扉を開ける前の作業スペースも見る。"
+},
+{
+    "id": "tv-board",
+    "category": "住宅設備",
+    "name": "TV台",
+    "min": "幅1000 / 奥行350 / H350",
+    "standard": "幅1500〜1800 / 奥行400 / H400",
+    "roomy": "幅2000以上 / 奥行450",
+    "note": "50インチ前後なら幅1500以上あるとバランスが取りやすい。"
+},
+{
+    "id": "ac-outdoor-unit",
+    "category": "住宅設備",
+    "name": "エアコン室外機",
+    "min": "幅800 / 奥行350",
+    "standard": "幅900 / 奥行400 / 前面600以上",
+    "roomy": "幅1000 / 奥行500 / 前面1000",
+    "note": "バルコニーや外部通路では前面の排気スペースが大事。"
+},
+{
+    "id": "water-heater",
+    "category": "住宅設備",
+    "name": "給湯器置き場",
+    "min": "幅500 / 奥行250",
+    "standard": "幅600 / 奥行300",
+    "roomy": "点検スペース込みで幅900程度",
+    "note": "外壁面に付ける場合は窓や隣地との関係を確認。"
+},
+{
+    "id": "laundry-space",
+    "category": "住宅設備",
+    "name": "室内物干し",
+    "min": "幅900 / 奥行600",
+    "standard": "幅1800 / 奥行900",
+    "roomy": "幅2700 / 奥行1200",
+    "note": "洗濯機から干す場所までの動線が短いと使いやすい。"
+},
+{
+    "id": "trash-space",
+    "category": "住宅設備",
+    "name": "ゴミ箱置き場",
+    "min": "幅450 / 奥行450",
+    "standard": "幅600〜900 / 奥行450",
+    "roomy": "分別込みで幅1200以上",
+    "note": "キッチン・勝手口・外部ゴミ置き場との距離を見る。"
+},
+{
+    "id": "pet-wash",
+    "category": "住宅設備",
+    "name": "ペット足洗い場",
+    "min": "600×600",
+    "standard": "900×900",
+    "roomy": "1200×900",
+    "note": "玄関や外部アプローチ近くにあると使いやすい。"
+},
+{
+    "id": "barrier-free-toilet",
+    "category": "バリアフリー",
+    "name": "車椅子対応トイレ",
+    "min": "1600×2000",
+    "standard": "1800×2000",
+    "roomy": "2000×2200以上",
+    "note": "車椅子回転1500、手すり、扉の開閉方向を合わせて見る。"
+},
+{
+    "id": "barrier-free-door",
+    "category": "バリアフリー",
+    "name": "車椅子対応建具幅",
+    "min": "有効幅800",
+    "standard": "有効幅850〜900",
+    "roomy": "有効幅900以上",
+    "note": "引き戸にすると開閉時の干渉が少なく、平面計画しやすい。"
+},
+{
+    "id": "barrier-free-entrance",
+    "category": "バリアフリー",
+    "name": "玄関段差・上がり框",
+    "min": "段差を小さく / 手すり検討",
+    "standard": "段差20以下またはスロープ処理",
+    "roomy": "土間広め＋ベンチ付き",
+    "note": "靴の脱ぎ履き、介助、車椅子回転スペースをまとめて考える。"
+},
+{
+    "id": "through-column",
+    "category": "構造",
+    "name": "通し柱",
+    "min": "120×120",
+    "standard": "120角〜150角",
+    "roomy": "150角以上",
+    "note": "1階から上階まで通る柱。隅角部や要所で使われやすい。"
+},
+{
+    "id": "tube-column",
+    "category": "構造",
+    "name": "管柱",
+    "min": "105×105",
+    "standard": "105角〜120角",
+    "roomy": "120角以上",
+    "note": "各階ごとに立てる一般的な柱。通し柱との使い分けを意識する。"
+},
+{
+    "id": "stud-column",
+    "category": "構造",
+    "name": "間柱",
+    "min": "30×105",
+    "standard": "30×105〜45×105",
+    "roomy": "45×105以上",
+    "note": "耐力壁というより壁下地として使うことが多い。"
+},
+{
+    "id": "side-column",
+    "category": "構造",
+    "name": "添え柱",
+    "min": "105×105",
+    "standard": "105角〜120角",
+    "roomy": "120角以上",
+    "note": "開口部横や補強したい位置に添えて使う柱。"
+},
+{
+    "id": "dosashi",
+    "category": "構造",
+    "name": "胴差し",
+    "min": "105×180程度",
+    "standard": "105×210〜120×240程度",
+    "roomy": "スパンに応じて大きくする",
+    "note": "2階床まわりの外周などに回る横架材。梁や桁との役割整理が大事。"
+},
+{
+    "id": "keta",
+    "category": "構造",
+    "name": "桁",
+    "min": "105×180程度",
+    "standard": "105×210〜120×240程度",
+    "roomy": "大スパンでは構造確認",
+    "note": "柱の上で屋根や梁を受ける横材。位置関係を小屋伏図で確認する。"
+},
+{
+    "id": "nokiketa",
+    "category": "構造",
+    "name": "軒桁",
+    "min": "105×180程度",
+    "standard": "105×210〜120×240程度",
+    "roomy": "スパン・荷重に応じて調整",
+    "note": "外壁上部で屋根荷重を受ける桁。軒先納まりと一緒に考える。"
+},
+{
+    "id": "koyabari",
+    "category": "構造",
+    "name": "小屋梁",
+    "min": "105×180程度",
+    "standard": "105×210〜120×240程度",
+    "roomy": "大スパンでは梁せいを大きく",
+    "note": "屋根荷重を受ける梁。小屋束や母屋との関係を見る。"
+},
+{
+    "id": "hiuchibari",
+    "category": "構造",
+    "name": "火打梁",
+    "min": "隅部に斜め配置",
+    "standard": "床組・小屋組の隅角に配置",
+    "roomy": "必要に応じて金物・火打土台も併用",
+    "note": "水平変形を抑える斜材。伏図で入れ忘れやすい。"
+},
+{
+    "id": "oobiki",
+    "category": "構造",
+    "name": "大引",
+    "min": "90×90程度",
+    "standard": "90角〜105角",
+    "roomy": "スパンが大きい場合は構造確認",
+    "note": "床下で根太や床を受ける材。束や基礎との位置関係を見る。"
+},
+{
+    "id": "neda",
+    "category": "構造",
+    "name": "根太",
+    "min": "45×45程度",
+    "standard": "45×60〜45×105",
+    "roomy": "床仕様に応じて調整",
+    "note": "床板を支える細い横材。床組のピッチも意識する。"
+},
+{
+    "id": "yukabari",
+    "category": "構造",
+    "name": "床梁",
+    "min": "105×180程度",
+    "standard": "105×210〜120×240程度",
+    "roomy": "スパン・荷重に応じて梁せい調整",
+    "note": "2階床などを支える梁。断面図では床厚と一緒に表現する。"
+},
+{
+    "id": "sujikai",
+    "category": "耐力壁",
+    "name": "筋交い",
+    "min": "30×90程度",
+    "standard": "45×90程度",
+    "roomy": "たすき掛けや他耐力要素と併用",
+    "note": "耐力壁として使う場合は位置・向き・バランスが大事。"
+},
+{
+    "id": "tasuki-sujikai",
+    "category": "耐力壁",
+    "name": "たすき掛け筋交い",
+    "min": "片側から対角に1組",
+    "standard": "X形で配置",
+    "roomy": "他の耐力壁とバランスよく配置",
+    "note": "壁倍率が高くなるが、開口計画との両立に注意。"
+},
+{
+    "id": "single-sujikai",
+    "category": "耐力壁",
+    "name": "片筋交い",
+    "min": "1本配置",
+    "standard": "方向バランスを見て配置",
+    "roomy": "反対側の耐力壁と組み合わせる",
+    "note": "一方向だけに偏らせず、建物全体のバランスで見る。"
+},
+{
+    "id": "shear-wall",
+    "category": "耐力壁",
+    "name": "耐力壁",
+    "min": "各方向に必要量を確保",
+    "standard": "外周＋内部に分散配置",
+    "roomy": "偏心が少ないよう四隅付近にも配置",
+    "note": "地震・風に抵抗する壁。壁量と偏心の両方を意識したい。"
+},
+{
+    "id": "structural-plywood",
+    "category": "耐力壁",
+    "name": "構造用合板",
+    "min": "厚9mm程度",
+    "standard": "厚9〜12mm",
+    "roomy": "倍率や釘ピッチは仕様確認",
+    "note": "面で効く耐力要素。開口が多い壁では有効長さが減る。"
+},
+{
+    "id": "wall-multiplier",
+    "category": "耐力壁",
+    "name": "壁倍率",
+    "min": "仕様ごとに確認",
+    "standard": "筋交い・合板ごとに異なる",
+    "roomy": "告示・仕様書で詳細確認",
+    "note": "耐力壁の強さを示す考え方。数値は仕様で変わるので要確認。"
+},
+{
+    "id": "wall-quantity",
+    "category": "耐力壁",
+    "name": "壁量",
+    "min": "必要壁量を満たす",
+    "standard": "各方向でバランスよく確保",
+    "roomy": "余裕を見つつ偏りを抑える",
+    "note": "単に量だけでなく、配置バランスもかなり重要。"
+},
+{
+    "id": "eccentricity-rate",
+    "category": "耐力壁",
+    "name": "偏心率",
+    "min": "法規・計算条件に従う",
+    "standard": "耐力壁の偏りを小さく",
+    "roomy": "重心と剛心のズレを抑える",
+    "note": "壁が片寄るとねじれやすい。耐力壁配置計画で意識する。"
+},
+{
+    "id": "four-division",
+    "category": "耐力壁",
+    "name": "四分割法",
+    "min": "各区画に壁を確保",
+    "standard": "バランスよく分散配置",
+    "roomy": "開口との整合を見ながら調整",
+    "note": "耐力壁バランス確認の考え方。授業で扱うなら入れておくと便利。"
+},
+{
+    "id": "strip-foundation",
+    "category": "基礎",
+    "name": "布基礎",
+    "min": "立ち上がり＋フーチング",
+    "standard": "立ち上がり幅・高さは構造に応じて設定",
+    "roomy": "地耐力や荷重で調整",
+    "note": "壁や柱下に連続して設ける基礎。断面図で描くことが多い。"
+},
+{
+    "id": "mat-foundation",
+    "category": "基礎",
+    "name": "べた基礎",
+    "min": "床下全面コンクリート",
+    "standard": "立ち上がり＋底盤一体",
+    "roomy": "配筋や厚みは構造確認",
+    "note": "床下全面で荷重を受ける基礎。木造住宅でよく使われる。"
+},
+{
+    "id": "foundation-width",
+    "category": "基礎",
+    "name": "基礎幅",
+    "min": "120程度",
+    "standard": "120〜150以上",
+    "roomy": "条件に応じてさらに大きく",
+    "note": "立ち上がりやフーチング寸法は構造条件で変わる。"
+},
+{
+    "id": "dodai",
+    "category": "基礎",
+    "name": "土台",
+    "min": "105×105",
+    "standard": "105角〜120角",
+    "roomy": "120角以上",
+    "note": "基礎の上に載る材。アンカーボルトとの関係もセットで考える。"
+},
+{
+    "id": "anchor-bolt",
+    "category": "基礎",
+    "name": "アンカーボルト",
+    "min": "必要位置に配置",
+    "standard": "土台と基礎を緊結",
+    "roomy": "端部・要所で適切に増し締め",
+    "note": "基礎と土台をつなぐ金物。位置や間隔は仕様に従う。"
+},
+{
+    "id": "hold-down",
+    "category": "基礎",
+    "name": "ホールダウン金物",
+    "min": "必要柱脚・柱頭に配置",
+    "standard": "引き抜きの大きい柱に使用",
+    "roomy": "耐力壁計画と合わせて要所配置",
+    "note": "地震時の柱引き抜きを抑える金物。耐力壁端部で重要。"
+},
+{
+    "id": "underfloor-vent",
+    "category": "基礎",
+    "name": "床下換気",
+    "min": "換気経路を確保",
+    "standard": "基礎パッキン・換気口などで対応",
+    "roomy": "床下全体に風が通る計画",
+    "note": "湿気対策として大事。点検口と合わせて考えるとよい。"
+},
+{
+    "id": "munagi",
+    "category": "屋根・小屋組",
+    "name": "棟木",
+    "min": "90×90mm",
+    "standard": "105×105〜105×150mm",
+    "roomy": "120×150〜120×180mm",
+    "note": "屋根頂部の横材。読みは『むなぎ』。設計課題では105角以上で描くと分かりやすい。"
+},
+{
+    "id": "moya",
+    "category": "屋根・小屋組",
+    "name": "母屋",
+    "min": "90×90mm / ピッチ910〜1820mm",
+    "standard": "105×105mm / ピッチ910mm前後",
+    "roomy": "120×120mm / ピッチ910mm以下",
+    "note": "垂木を支える横材。小屋伏図では棟木と平行に入れ、間隔も数値で書くと伝わりやすい。"
+},
+{
+    "id": "taruki",
+    "category": "屋根・小屋組",
+    "name": "垂木",
+    "min": "45×45mm / ピッチ455mm",
+    "standard": "45×60mm / ピッチ455mm",
+    "roomy": "45×90mm / ピッチ303〜455mm",
+    "note": "屋根面を支える斜め材。屋根勾配方向に流し、平面では流れ方向が分かるように描く。"
+},
+{
+    "id": "koyazuka",
+    "category": "屋根・小屋組",
+    "name": "小屋束",
+    "min": "90×90mm",
+    "standard": "105×105mm / 間隔910〜1820mm",
+    "roomy": "120×120mm / 高い束は補強検討",
+    "note": "母屋や棟木を支える縦材。必ず下に小屋梁など受け材がある位置に置く。"
+},
+{
+    "id": "koya-sujikai",
+    "category": "屋根・小屋組",
+    "name": "小屋筋交い",
+    "min": "30×90mm",
+    "standard": "45×90mm / X方向に斜め配置",
+    "roomy": "45×105mm / 火打梁と併用",
+    "note": "小屋組の変形を抑える斜材。小屋束まわりや端部に入れると図面で分かりやすい。"
+},
+{
+    "id": "nojita",
+    "category": "屋根・小屋組",
+    "name": "野地板",
+    "min": "厚12mm",
+    "standard": "厚12〜15mm",
+    "roomy": "厚18mm",
+    "note": "屋根材の下地となる板。断面図では垂木の上に屋根厚として表現する。"
+},
+{
+    "id": "hafu",
+    "category": "屋根・小屋組",
+    "name": "破風板",
+    "min": "厚18mm / 幅180mm",
+    "standard": "厚21mm / 幅210mm",
+    "roomy": "厚24mm / 幅240mm以上",
+    "note": "妻側の屋根端部に付く板。屋根厚や軒の出と合わせて外観に出る。"
+},
+{
+    "id": "hanakakushi",
+    "category": "屋根・小屋組",
+    "name": "鼻隠し",
+    "min": "厚18mm / 幅150mm",
+    "standard": "厚21mm / 幅180mm",
+    "roomy": "厚24mm / 幅210mm以上",
+    "note": "軒先で垂木の端を隠す板。雨樋を付ける場合はその分の納まりも見る。"
+},
+{
+    "id": "sujikai-plate",
+    "category": "接合金物",
+    "name": "筋交いプレート",
+    "min": "筋交い端部に配置",
+    "standard": "接合部補強として使用",
+    "roomy": "仕様に応じて金物種別確認",
+    "note": "筋交いを柱・梁・土台に接合するための金物。"
+},
+{
+    "id": "hagobolt",
+    "category": "接合金物",
+    "name": "羽子板ボルト",
+    "min": "要所に配置",
+    "standard": "梁相互や梁柱接合で使用",
+    "roomy": "引張力がかかる箇所で確認",
+    "note": "梁どうしなどを引き寄せる接合金物。"
+},
+{
+    "id": "kasugai",
+    "category": "接合金物",
+    "name": "かすがい",
+    "min": "コの字で緊結",
+    "standard": "材相互の簡易接合に使用",
+    "roomy": "必要に応じて他金物併用",
+    "note": "コの字形の金物で材をつなぐ。"
+},
+{
+    "id": "chukyaku-kanamono",
+    "category": "接合金物",
+    "name": "柱脚金物",
+    "min": "柱脚部に配置",
+    "standard": "基礎・土台・柱を接合",
+    "roomy": "引抜きやせん断に応じて選定",
+    "note": "柱下部の接合補強金物。"
+},
+{
+    "id": "chuto-kanamono",
+    "category": "接合金物",
+    "name": "柱頭金物",
+    "min": "柱頭部に配置",
+    "standard": "梁・桁と柱を接合",
+    "roomy": "耐力要素に応じて選定",
+    "note": "柱上部の接合補強金物。"
+},
+{
+    "id": "beam-hanger",
+    "category": "接合金物",
+    "name": "梁受け金物",
+    "min": "梁端部に使用",
+    "standard": "梁を受ける接合金物として配置",
+    "roomy": "荷重条件に応じて選定",
+    "note": "梁を別材に受けさせるときの金物。"
+},
+{
+    "id": "nail-pitch",
+    "category": "接合金物",
+    "name": "釘ピッチ",
+    "min": "仕様ごとに確認",
+    "standard": "構造用合板などで指定あり",
+    "roomy": "端部・中通りで異なる場合あり",
+    "note": "釘の間隔。構造性能に直結するので仕様確認が必要。"
+},
+{
+    "id": "first-floor-height",
+    "category": "図面表現",
+    "name": "1階床高",
+    "min": "GL＋300",
+    "standard": "GL＋450前後",
+    "roomy": "GL＋500以上",
+    "note": "基礎立ち上がりや玄関ポーチとの関係も見る。"
+},
+{
+    "id": "second-floor-height",
+    "category": "図面表現",
+    "name": "2階床高",
+    "min": "階高から設定",
+    "standard": "1階FL＋階高で決定",
+    "roomy": "床厚・梁せいを見て調整",
+    "note": "1階天井高や床厚から自然に決める。"
+},
+{
+    "id": "story-height",
+    "category": "図面表現",
+    "name": "階高",
+    "min": "2500〜2700",
+    "standard": "2800〜3200",
+    "roomy": "用途に応じてさらに高く",
+    "note": "1階FLから2階FLまでの高さ。天井高・床厚とセットで決まる。"
+},
+{
+    "id": "ceiling-plenum",
+    "category": "図面表現",
+    "name": "天井懐",
+    "min": "150程度",
+    "standard": "200〜300",
+    "roomy": "設備や梁型込みで300以上",
+    "note": "天井と上部構造の間。断面図で見落としやすい。"
+},
+{
+    "id": "beam-depth",
+    "category": "図面表現",
+    "name": "梁せい",
+    "min": "スパンに応じて設定",
+    "standard": "梁幅より大きい高さを持つ",
+    "roomy": "大スパンでは深くなる",
+    "note": "梁の高さ方向寸法。梁幅とは別物なので注意。"
+},
+{
+    "id": "column-centerline",
+    "category": "図面表現",
+    "name": "柱芯",
+    "min": "通り芯を明示",
+    "standard": "グリッドに合わせて整理",
+    "roomy": "平面・伏図で統一して表現",
+    "note": "柱の中心線。寸法取りの基準になる。"
+},
+{
+    "id": "wall-centerline",
+    "category": "図面表現",
+    "name": "壁芯",
+    "min": "必要位置に明示",
+    "standard": "壁中心を基準に整理",
+    "roomy": "寸法系統を揃えて見やすく",
+    "note": "壁の中心線。柱芯・通り芯との整合が大事。"
+},
+{
+    "id": "grid-module",
+    "category": "図面表現",
+    "name": "グリッド",
+    "min": "910モジュール",
+    "standard": "910やその倍数で整理",
+    "roomy": "用途に応じて半マスや独自寸法併用",
+    "note": "設計課題で全体を整理する基準。"
+},
+{
+    "id": "fix-window",
+    "category": "開口部",
+    "name": "FIX窓",
+    "min": "幅400 / H400",
+    "standard": "幅600〜1200 / H600〜1200",
+    "roomy": "幅1600以上 / H1600以上",
+    "note": "開かない窓。採光や眺望を取りたい場所に使いやすい。"
+},
+{
+    "id": "high-window",
+    "category": "開口部",
+    "name": "高窓",
+    "min": "幅600 / H300 / 下端H1800",
+    "standard": "幅900〜1600 / H400〜600 / 下端H1800〜2000",
+    "roomy": "幅1800以上 / 連窓",
+    "note": "視線を切りながら採光・換気を取りたい場所に向く。"
+},
+{
+    "id": "low-window",
+    "category": "開口部",
+    "name": "地窓",
+    "min": "幅600 / H300 / 下端H200",
+    "standard": "幅900〜1600 / H400〜600 / 下端H200〜400",
+    "roomy": "幅1800以上 / 横長に連続",
+    "note": "足元の採光や庭への抜けを作れる。和室や廊下にも合う。"
+},
+{
+    "id": "horizontal-window",
+    "category": "開口部",
+    "name": "横長窓",
+    "min": "幅1200 / H300",
+    "standard": "幅1600〜2400 / H400〜600",
+    "roomy": "幅2700以上 / H600〜800",
+    "note": "水平ラインを強調できる。キッチンや廊下の採光にも使いやすい。"
+},
+{
+    "id": "vertical-window",
+    "category": "開口部",
+    "name": "縦長窓",
+    "min": "幅300 / H900",
+    "standard": "幅400〜600 / H1200〜1600",
+    "roomy": "幅700〜900 / H1800",
+    "note": "細い壁面にも入れやすく、外観のアクセントになる。"
+},
+{
+    "id": "slit-window",
+    "category": "開口部",
+    "name": "スリット窓",
+    "min": "幅200 / H900",
+    "standard": "幅300〜450 / H1200〜1800",
+    "roomy": "複数本を連続配置",
+    "note": "視線を抑えつつ光を入れたい場所に使える。"
+},
+{
+    "id": "awning-window",
+    "category": "開口部",
+    "name": "横すべり出し窓",
+    "min": "幅600 / H400",
+    "standard": "幅700〜900 / H500〜700",
+    "roomy": "幅1200 / H700",
+    "note": "外側に押し出して開く窓。雨が入りにくく換気しやすい。"
+},
+{
+    "id": "casement-window",
+    "category": "開口部",
+    "name": "縦すべり出し窓",
+    "min": "幅300 / H700",
+    "standard": "幅400〜600 / H900〜1200",
+    "roomy": "幅700 / H1400以上",
+    "note": "風を取り込みやすい。細い壁や個室に使いやすい。"
+},
+{
+    "id": "sliding-window-small",
+    "category": "開口部",
+    "name": "引き違い窓",
+    "min": "幅900 / H700",
+    "standard": "幅1200〜1800 / H900〜1200",
+    "roomy": "幅2400以上 / H1200以上",
+    "note": "住宅でよく使う標準的な窓。家具配置との干渉が少ない。"
+},
+{
+    "id": "double-hung-window",
+    "category": "開口部",
+    "name": "上げ下げ窓",
+    "min": "幅400 / H700",
+    "standard": "幅600〜800 / H900〜1200",
+    "roomy": "幅900 / H1400",
+    "note": "洋風の外観に合う。縦方向のプロポーションを作りやすい。"
+},
+{
+    "id": "corner-window",
+    "category": "開口部",
+    "name": "コーナー窓",
+    "min": "各面幅600程度",
+    "standard": "各面幅900〜1200",
+    "roomy": "各面幅1600以上",
+    "note": "角に抜けを作る窓。構造上、耐力壁の確保に注意。"
+},
+{
+    "id": "clerestory-window",
+    "category": "開口部",
+    "name": "欄間窓",
+    "min": "幅600 / H200",
+    "standard": "幅900〜1800 / H300〜450",
+    "roomy": "連続配置",
+    "note": "建具や壁の上部に入れる窓。採光や通風を補助できる。"
+},
+{
+    "id": "skylight",
+    "category": "開口部",
+    "name": "天窓",
+    "min": "600×600",
+    "standard": "780×980程度",
+    "roomy": "900×1200以上",
+    "note": "上から光を落とせる。夏の熱や雨仕舞いも考える。"
+},
+{
+    "id": "bathroom-window",
+    "category": "開口部",
+    "name": "浴室窓",
+    "min": "幅400 / H300 / 下端H1400",
+    "standard": "幅600 / H400〜600 / 下端H1200〜1500",
+    "roomy": "幅900 / H600",
+    "note": "プライバシーを見ながら換気を取る。高めの位置が無難。"
+},
+{
+    "id": "toilet-window",
+    "category": "開口部",
+    "name": "トイレ窓",
+    "min": "幅300 / H300 / 下端H1600",
+    "standard": "幅400 / H600 / 下端H1500〜1800",
+    "roomy": "幅600 / H600",
+    "note": "小さめで高めが使いやすい。外部からの視線に注意。"
+},
+{
+    "id": "kitchen-window",
+    "category": "開口部",
+    "name": "キッチン窓",
+    "min": "幅600 / H400 / 下端H1100",
+    "standard": "幅900〜1200 / H500〜700 / 下端H1000〜1200",
+    "roomy": "幅1600以上 / 横長窓",
+    "note": "作業台や吊戸棚との高さ関係を確認する。"
+},
+{
+    "id": "desk-window",
+    "category": "開口部",
+    "name": "机前の窓",
+    "min": "幅900 / H600 / 下端H900",
+    "standard": "幅1200〜1600 / H800〜1000 / 下端H900",
+    "roomy": "幅1800以上 / H1000以上",
+    "note": "机高さ700前後なので、窓下端H900前後が合わせやすい。"
+},
+{
+    "id": "stair-window",
+    "category": "開口部",
+    "name": "階段窓",
+    "min": "幅400 / H900",
+    "standard": "幅600〜900 / H1200〜1600",
+    "roomy": "縦長・高窓で連続配置",
+    "note": "階段の踊り場や吹抜けに入れると明るさを確保しやすい。"
+},
+{
+    "id": "entrance-sidelight",
+    "category": "開口部",
+    "name": "玄関袖窓",
+    "min": "幅300 / H1600",
+    "standard": "幅400〜600 / H1800〜2000",
+    "roomy": "親子扉風に幅700以上",
+    "note": "玄関ドア横に採光を入れる窓。外からの視線に注意。"
+},
+{
+    "id": "umbrella-stand",
+    "category": "小物",
+    "name": "傘立て",
+    "min": "幅200 / 奥行200 / H450",
+    "standard": "幅250〜350 / 奥行250 / H500",
+    "roomy": "幅450 / 奥行300 / H600",
+    "note": "玄関土間の端に置くと動線を邪魔しにくい。"
+},
+{
+    "id": "mailbox",
+    "category": "小物",
+    "name": "郵便受け",
+    "min": "幅300 / 奥行120 / H250",
+    "standard": "幅350〜400 / 奥行150 / H300",
+    "roomy": "幅450以上 / 奥行200",
+    "note": "玄関前や門柱まわりに配置。取り出しやすさも考える。"
+},
+{
+    "id": "parcel-box",
+    "category": "小物",
+    "name": "宅配ボックス",
+    "min": "幅350 / 奥行400 / H450",
+    "standard": "幅450 / 奥行500 / H600",
+    "roomy": "幅500〜600 / 奥行600 / H800以上",
+    "note": "玄関付近に置くと便利。開閉スペースも見る。"
+},
+{
+    "id": "shoehorn-hook",
+    "category": "小物",
+    "name": "靴べら・小物フック",
+    "min": "幅100 / 奥行50",
+    "standard": "幅200 / 奥行80 / 取付H900〜1200",
+    "roomy": "幅300以上 / 鍵置き兼用",
+    "note": "玄関ドア横にあると自然。壁面小物として図面に足しやすい。"
+},
+{
+    "id": "key-tray",
+    "category": "小物",
+    "name": "鍵置きトレー",
+    "min": "幅200 / 奥行120 / H50",
+    "standard": "幅300 / 奥行150",
+    "roomy": "幅450 / 奥行200",
+    "note": "玄関収納上やニッチに置くと生活感が出る。"
+},
+{
+    "id": "slipper-rack",
+    "category": "小物",
+    "name": "スリッパラック",
+    "min": "幅250 / 奥行150 / H600",
+    "standard": "幅300〜450 / 奥行200 / H700",
+    "roomy": "幅600 / 奥行250",
+    "note": "玄関の壁際に置く。来客動線の邪魔にならない位置にする。"
+},
+{
+    "id": "coat-hook",
+    "category": "小物",
+    "name": "コートフック",
+    "min": "幅300 / 奥行80 / 取付H1600",
+    "standard": "幅600 / 奥行100 / 取付H1600〜1800",
+    "roomy": "幅900以上 / ベンチ併用",
+    "note": "玄関や廊下にあると帰宅動線がわかりやすくなる。"
+},
+{
+    "id": "wall-niche",
+    "category": "小物",
+    "name": "壁ニッチ",
+    "min": "幅300 / 奥行80 / H300",
+    "standard": "幅450〜600 / 奥行100〜150 / H300〜500",
+    "roomy": "幅900 / 奥行150",
+    "note": "飾り棚や鍵置きに使える。壁厚との関係に注意。"
+},
+{
+    "id": "roomba-base",
+    "category": "小物",
+    "name": "ルンバ基地",
+    "min": "幅400 / 奥行400 / H150",
+    "standard": "幅500 / 奥行500 / H200",
+    "roomy": "幅600 / 奥行600",
+    "note": "収納下や廊下端に置く。前面に出入りスペースが必要。"
+},
+{
+    "id": "vacuum-storage",
+    "category": "小物",
+    "name": "掃除機収納",
+    "min": "幅300 / 奥行300 / H1200",
+    "standard": "幅450 / 奥行450 / H1600",
+    "roomy": "幅600 / 奥行600 / H1800",
+    "note": "コードレス掃除機ならコンセント位置もセットで考える。"
+},
+{
+    "id": "cleaning-tool-storage",
+    "category": "小物",
+    "name": "掃除道具収納",
+    "min": "幅300 / 奥行300 / H1200",
+    "standard": "幅450 / 奥行450 / H1800",
+    "roomy": "幅600以上 / 棚付き",
+    "note": "モップ・洗剤・バケツをまとめる場所。洗面や勝手口近くが便利。"
+},
+{
+    "id": "laundry-basket",
+    "category": "小物",
+    "name": "ランドリーバスケット",
+    "min": "幅350 / 奥行350 / H450",
+    "standard": "幅400〜500 / 奥行400 / H500",
+    "roomy": "幅600 / 奥行450 / 複数分別",
+    "note": "脱衣室や洗濯機横に置く。通路を狭めすぎないようにする。"
+},
+{
+    "id": "towel-rack",
+    "category": "小物",
+    "name": "タオル掛け",
+    "min": "幅300 / 奥行60 / 取付H1000",
+    "standard": "幅450〜600 / 奥行80 / 取付H1000〜1200",
+    "roomy": "幅700以上",
+    "note": "洗面台横やトイレ内に置くと生活感が出る。"
+},
+{
+    "id": "toilet-paper-holder",
+    "category": "小物",
+    "name": "紙巻器",
+    "min": "幅150 / 奥行120 / 取付H700",
+    "standard": "幅180〜300 / 奥行120 / 取付H700前後",
+    "roomy": "棚付き幅300以上",
+    "note": "便器側方に配置。手が届く位置にする。"
+},
+{
+    "id": "toilet-brush-storage",
+    "category": "小物",
+    "name": "トイレブラシ収納",
+    "min": "幅150 / 奥行150 / H400",
+    "standard": "幅200 / 奥行200 / H450",
+    "roomy": "収納内に隠す",
+    "note": "トイレの隅や収納下に置くと図面上も納まりやすい。"
+},
+{
+    "id": "bath-basket",
+    "category": "小物",
+    "name": "脱衣かご",
+    "min": "幅350 / 奥行350 / H350",
+    "standard": "幅450 / 奥行450 / H400",
+    "roomy": "幅600 / 奥行450",
+    "note": "脱衣室の入口近くか洗濯機横にあると使いやすい。"
+},
+{
+    "id": "waste-bin-small",
+    "category": "小物",
+    "name": "小型ゴミ箱",
+    "min": "幅200 / 奥行200 / H300",
+    "standard": "幅300 / 奥行300 / H450",
+    "roomy": "幅450 / 奥行350 / 分別",
+    "note": "洗面・トイレ・個室に置ける小物。家具配置の隙間確認にも使える。"
+},
+{
+    "id": "trash-can-kitchen",
+    "category": "小物",
+    "name": "キッチン分別ゴミ箱",
+    "min": "幅450 / 奥行350 / H600",
+    "standard": "幅600〜900 / 奥行450 / H700",
+    "roomy": "幅1200 / 奥行500 / 3〜4分別",
+    "note": "カップボード下や勝手口近くに置くと動線が良い。"
+},
+{
+    "id": "plant-pot-small",
+    "category": "小物",
+    "name": "観葉植物 小",
+    "min": "直径200 / H300",
+    "standard": "直径300 / H600",
+    "roomy": "直径400 / H900",
+    "note": "室内の余白や窓際に置くとプレゼン図面が柔らかく見える。"
+},
+{
+    "id": "plant-pot-large",
+    "category": "小物",
+    "name": "観葉植物 大",
+    "min": "直径400 / H1200",
+    "standard": "直径500 / H1500",
+    "roomy": "直径600以上 / H1800以上",
+    "note": "LDKやカフェ客席の角に置くと空間のスケールが伝わりやすい。"
+},
+{
+    "id": "floor-lamp",
+    "category": "小物",
+    "name": "フロアライト",
+    "min": "直径250 / H1200",
+    "standard": "直径300〜400 / H1400〜1600",
+    "roomy": "直径500 / H1700",
+    "note": "ソファ横やベッド横に置くと居場所感が出る。"
+},
+{
+    "id": "table-lamp",
+    "category": "小物",
+    "name": "テーブルライト",
+    "min": "幅200 / 奥行200 / H300",
+    "standard": "幅300 / 奥行300 / H400",
+    "roomy": "幅400 / H500",
+    "note": "サイドテーブルや寝室に置く小物として使いやすい。"
+},
+{
+    "id": "side-table",
+    "category": "小物",
+    "name": "サイドテーブル",
+    "min": "幅300 / 奥行300 / H450",
+    "standard": "幅400〜500 / 奥行400 / H500",
+    "roomy": "幅600 / 奥行450",
+    "note": "ソファ横やベッド横に置く。通路600を残す。"
+},
+{
+    "id": "magazine-rack",
+    "category": "小物",
+    "name": "マガジンラック",
+    "min": "幅300 / 奥行200 / H400",
+    "standard": "幅450 / 奥行250 / H600",
+    "roomy": "幅600 / 奥行300",
+    "note": "カフェや待合に置くと用途が伝わりやすい。"
+},
+{
+    "id": "menu-stand",
+    "category": "小物",
+    "name": "メニュースタンド",
+    "min": "幅300 / 奥行300 / H900",
+    "standard": "幅450 / 奥行450 / H1200",
+    "roomy": "幅600 / H1500",
+    "note": "店舗入口やレジ横に配置。人の流れを止めすぎない位置にする。"
+},
+{
+    "id": "signboard-a",
+    "category": "小物",
+    "name": "A型看板",
+    "min": "幅450 / 奥行450 / H900",
+    "standard": "幅600 / 奥行600 / H1000",
+    "roomy": "幅700 / H1200",
+    "note": "店舗前の外構小物。歩行者動線を邪魔しないように置く。"
+},
+{
+    "id": "display-case-small",
+    "category": "小物",
+    "name": "小型ショーケース",
+    "min": "幅600 / 奥行450 / H900",
+    "standard": "幅900〜1200 / 奥行500 / H1000",
+    "roomy": "幅1500 / 奥行600",
+    "note": "焼き菓子や物販を置くカフェに使いやすい。"
+},
+{
+    "id": "checkout-tray",
+    "category": "小物",
+    "name": "会計トレー置き",
+    "min": "幅250 / 奥行180",
+    "standard": "幅300 / 奥行220",
+    "roomy": "幅450 / 奥行300",
+    "note": "レジ台上の細かい小物。カウンター奥行の確認に使える。"
+},
+{
+    "id": "takeout-shelf",
+    "category": "小物",
+    "name": "テイクアウト受取棚",
+    "min": "幅600 / 奥行300 / H900",
+    "standard": "幅900 / 奥行350 / H900〜1000",
+    "roomy": "幅1200 / 奥行450",
+    "note": "レジ横や入口近くに置くと持ち帰り動線が整理しやすい。"
+},
+{
+    "id": "water-server",
+    "category": "小物",
+    "name": "ウォーターサーバー",
+    "min": "幅300 / 奥行350 / H1100",
+    "standard": "幅350 / 奥行400 / H1200",
+    "roomy": "幅450 / 奥行450",
+    "note": "カフェや事務所、待合に置ける。コンセント位置も見る。"
+},
+{
+    "id": "pet-bed",
+    "category": "小物",
+    "name": "ペットベッド",
+    "min": "幅500 / 奥行400",
+    "standard": "幅700 / 奥行500",
+    "roomy": "幅900 / 奥行700",
+    "note": "リビングや土間の端に置くとペットの居場所が表現できる。"
+},
+{
+    "id": "pet-cage",
+    "category": "小物",
+    "name": "ペットケージ",
+    "min": "幅600 / 奥行450 / H600",
+    "standard": "幅900 / 奥行600 / H700",
+    "roomy": "幅1200 / 奥行800",
+    "note": "犬猫の居場所。通路や扉の開閉と干渉しない位置に置く。"
+},
+{
+    "id": "pet-food-station",
+    "category": "小物",
+    "name": "ペット食事スペース",
+    "min": "幅400 / 奥行300",
+    "standard": "幅600 / 奥行400",
+    "roomy": "幅900 / 奥行500",
+    "note": "水こぼれを考えて土間やキッチン近くに置くと自然。"
+},
+{
+    "id": "cat-tower",
+    "category": "小物",
+    "name": "キャットタワー",
+    "min": "幅500 / 奥行500 / H1200",
+    "standard": "幅600 / 奥行600 / H1500",
+    "roomy": "幅800 / 奥行800 / H1800",
+    "note": "窓際やリビングの隅に置くとペット共生住宅っぽさが出る。"
+},
+{
+    "id": "dog-leash-hook",
+    "category": "小物",
+    "name": "リード掛け",
+    "min": "幅200 / 奥行50 / 取付H1000",
+    "standard": "幅300 / 取付H1000〜1200",
+    "roomy": "幅450 / 小物棚付き",
+    "note": "玄関や土間、ペット足洗い場の近くにあると便利。"
+},
+{
+    "id": "bench-small",
+    "category": "小物",
+    "name": "小ベンチ",
+    "min": "幅900 / 奥行350 / H400",
+    "standard": "幅1200 / 奥行400 / H420",
+    "roomy": "幅1800 / 奥行450",
+    "note": "玄関・縁側・カフェ待合に置ける。座面高さは400前後。"
+},
+{
+    "id": "stool",
+    "category": "小物",
+    "name": "スツール",
+    "min": "直径300 / H400",
+    "standard": "直径350〜400 / H420",
+    "roomy": "幅450 / H450",
+    "note": "カフェや玄関に置きやすい小さな椅子。"
+},
+{
+    "id": "floor-cushion",
+    "category": "小物",
+    "name": "座布団・クッション",
+    "min": "450×450",
+    "standard": "550×550",
+    "roomy": "600×600",
+    "note": "和室や子どもスペース、床座の表現に使える。"
+},
+{
+    "id": "kids-toy-box",
+    "category": "小物",
+    "name": "おもちゃ箱",
+    "min": "幅400 / 奥行300 / H300",
+    "standard": "幅600 / 奥行400 / H400",
+    "roomy": "幅900 / 奥行450",
+    "note": "子どもの遊び場に置くと用途がわかりやすい。"
+},
+{
+    "id": "kids-play-mat",
+    "category": "小物",
+    "name": "キッズマット",
+    "min": "900×900",
+    "standard": "1200×1800",
+    "roomy": "1800×1800以上",
+    "note": "リビング横の遊び場や勉強スペースに使いやすい。"
+},
+{
+    "id": "baby-stroller",
+    "category": "小物",
+    "name": "ベビーカー置き場",
+    "min": "幅500 / 奥行900",
+    "standard": "幅600 / 奥行1000",
+    "roomy": "幅800 / 奥行1200",
+    "note": "玄関土間や外部収納にあると子育て世帯の設計に使える。"
+},
+{
+    "id": "folding-chair",
+    "category": "小物",
+    "name": "折りたたみ椅子収納",
+    "min": "幅300 / 奥行150 / H900",
+    "standard": "幅450 / 奥行200 / H1200",
+    "roomy": "幅600 / 奥行250",
+    "note": "来客用椅子やイベント用備品の収納に使える。"
+},
+{
+    "id": "toolbox",
+    "category": "小物",
+    "name": "工具箱",
+    "min": "幅300 / 奥行200 / H200",
+    "standard": "幅450 / 奥行300 / H300",
+    "roomy": "幅600 / 奥行350",
+    "note": "土間収納や外部物置に置ける小物。"
+},
+{
+    "id": "garden-hose",
+    "category": "小物",
+    "name": "ホースリール",
+    "min": "幅300 / 奥行300 / H350",
+    "standard": "幅400 / 奥行400 / H450",
+    "roomy": "幅500 / 奥行500",
+    "note": "外部水栓の近くに置く。庭・ペット足洗い場と相性がいい。"
+},
+{
+    "id": "outdoor-trash-box",
+    "category": "小物",
+    "name": "屋外ゴミ箱",
+    "min": "幅450 / 奥行450 / H700",
+    "standard": "幅600〜900 / 奥行500 / H800",
+    "roomy": "幅1200 / 奥行600 / 分別対応",
+    "note": "勝手口や道路側に近い位置に置くと動線がよい。"
+},
+{
+    "id": "bicycle-pump",
+    "category": "小物",
+    "name": "空気入れ",
+    "min": "幅150 / 奥行150 / H600",
+    "standard": "幅200 / 奥行200 / H700",
+    "roomy": "自転車用品棚にまとめる",
+    "note": "自転車置き場や土間収納に置ける。"
+},
+{
+    "id": "helmet-shelf",
+    "category": "小物",
+    "name": "ヘルメット棚",
+    "min": "幅300 / 奥行300 / H300",
+    "standard": "幅600 / 奥行350 / H400",
+    "roomy": "幅900 / 奥行400",
+    "note": "自転車利用者向けの玄関・土間収納に使いやすい。"
+},
+{
+    "id": "fire-extinguisher",
+    "category": "小物",
+    "name": "消火器",
+    "min": "幅200 / 奥行200 / H600",
+    "standard": "幅250 / 奥行250 / H700",
+    "roomy": "収納ケース付き幅350",
+    "note": "店舗やキッチン近くの安全小物として配置できる。"
+},
+{
+    "id": "first-aid-box",
+    "category": "小物",
+    "name": "救急箱",
+    "min": "幅250 / 奥行180 / H150",
+    "standard": "幅350 / 奥行250 / H200",
+    "roomy": "収納棚内にまとめる",
+    "note": "洗面・リビング収納・店舗バックヤードに置ける。"
+},
+{
+    "id": "coat-stand",
+    "category": "小物",
+    "name": "コートスタンド",
+    "min": "直径400 / H1600",
+    "standard": "直径500 / H1700",
+    "roomy": "直径600 / H1800",
+    "note": "玄関・カフェ客席・待合に置くと滞在感が出る。"
+},
+{
+    "id": "living-room",
+    "category": "部屋広さ",
+    "name": "リビング",
+    "min": "8畳程度",
+    "standard": "10〜14畳",
+    "roomy": "16畳以上",
+    "note": "ソファ、TV台、通路600〜800を入れて考えるとまとまりやすい。"
+},
+{
+    "id": "dining-room",
+    "category": "部屋広さ",
+    "name": "ダイニング",
+    "min": "4.5畳程度",
+    "standard": "6〜8畳",
+    "roomy": "10畳以上",
+    "note": "椅子を引く後ろ600〜800を確保すると使いやすい。"
+},
+{
+    "id": "kitchen-room",
+    "category": "部屋広さ",
+    "name": "キッチン室",
+    "min": "3畳程度",
+    "standard": "4〜5畳",
+    "roomy": "6畳以上",
+    "note": "背面収納を置くなら通路900〜1000を見ておく。"
+},
+{
+    "id": "open-kitchen-ldk",
+    "category": "部屋広さ",
+    "name": "対面キッチン込みLDK",
+    "min": "14畳程度",
+    "standard": "16〜20畳",
+    "roomy": "22畳以上",
+    "note": "キッチン、ダイニング、ソファの距離感を一体で見る。"
+},
+{
+    "id": "master-bedroom",
+    "category": "部屋広さ",
+    "name": "主寝室",
+    "min": "6畳",
+    "standard": "8畳",
+    "roomy": "10畳以上＋WIC",
+    "note": "ダブルベッドを置くなら両側通路600があると楽。"
+},
+{
+    "id": "single-room",
+    "category": "部屋広さ",
+    "name": "一人部屋",
+    "min": "4.5畳",
+    "standard": "6畳",
+    "roomy": "8畳",
+    "note": "ベッド、机、収納を入れるなら6畳が扱いやすい。"
+},
+{
+    "id": "guest-room",
+    "category": "部屋広さ",
+    "name": "客間",
+    "min": "4.5畳",
+    "standard": "6畳",
+    "roomy": "8畳以上",
+    "note": "普段は多目的室として使える計画にすると無駄が少ない。"
+},
+{
+    "id": "japanese-room",
+    "category": "部屋広さ",
+    "name": "和室",
+    "min": "3畳",
+    "standard": "4.5〜6畳",
+    "roomy": "8畳以上",
+    "note": "床座・布団・押入れをセットで考えると日本家屋案に使いやすい。"
+},
+{
+    "id": "tatami-corner",
+    "category": "部屋広さ",
+    "name": "畳コーナー",
+    "min": "2畳",
+    "standard": "3〜4.5畳",
+    "roomy": "6畳",
+    "note": "LDKの一角に置くなら小上がりや収納付きでも使いやすい。"
+},
+{
+    "id": "utility-room",
+    "category": "部屋広さ",
+    "name": "家事室",
+    "min": "2畳",
+    "standard": "3畳",
+    "roomy": "4.5畳以上",
+    "note": "洗濯、アイロン、室内干しをまとめる部屋として便利。"
+},
+{
+    "id": "laundry-room",
+    "category": "部屋広さ",
+    "name": "ランドリールーム",
+    "min": "2畳",
+    "standard": "3〜4畳",
+    "roomy": "5畳以上",
+    "note": "洗濯機、物干し、収納、作業台を置くなら4畳前後ほしい。"
+},
+{
+    "id": "wash-dressing-room",
+    "category": "部屋広さ",
+    "name": "洗面脱衣室",
+    "min": "2畳",
+    "standard": "2.5〜3畳",
+    "roomy": "4畳以上",
+    "note": "洗濯機も置くなら3畳程度あると窮屈になりにくい。"
+},
+{
+    "id": "bathroom-room",
+    "category": "部屋広さ",
+    "name": "浴室スペース",
+    "min": "1216サイズ",
+    "standard": "1616サイズ",
+    "roomy": "1620サイズ以上",
+    "note": "部屋としてはユニットバス寸法と脱衣室の関係で見る。"
+},
+{
+    "id": "toilet-room-space",
+    "category": "部屋広さ",
+    "name": "トイレ空間",
+    "min": "0.75畳 / 800×1200",
+    "standard": "1畳 / 900×1500",
+    "roomy": "1.25〜1.5畳",
+    "note": "収納や手洗いを入れるなら奥行1500以上が使いやすい。"
+},
+{
+    "id": "entrance-hall",
+    "category": "部屋広さ",
+    "name": "玄関ホール",
+    "min": "1.5畳",
+    "standard": "2〜3畳",
+    "roomy": "4畳以上",
+    "note": "土間、上がり框、下足入れ、来客動線をまとめて見る。"
+},
+{
+    "id": "doma-space",
+    "category": "部屋広さ",
+    "name": "土間スペース",
+    "min": "2畳",
+    "standard": "3〜4.5畳",
+    "roomy": "6畳以上",
+    "note": "自転車、ペット、外部収納とつなげると使い道が広がる。"
+},
+{
+    "id": "shoes-cloak",
+    "category": "部屋広さ",
+    "name": "シューズクローク",
+    "min": "1畳",
+    "standard": "1.5〜2畳",
+    "roomy": "3畳以上",
+    "note": "ベビーカーや自転車用品も置くなら2畳以上あると楽。"
+},
+{
+    "id": "storage-room",
+    "category": "部屋広さ",
+    "name": "納戸",
+    "min": "1.5畳",
+    "standard": "2〜3畳",
+    "roomy": "4.5畳以上",
+    "note": "季節物、掃除機、工具などをまとめる部屋として計画しやすい。"
+},
+{
+    "id": "pantry-room",
+    "category": "部屋広さ",
+    "name": "パントリー室",
+    "min": "1畳",
+    "standard": "1.5〜2畳",
+    "roomy": "3畳以上",
+    "note": "棚奥行300〜450、通路800〜900を目安にする。"
+},
+{
+    "id": "walkthrough-closet",
+    "category": "部屋広さ",
+    "name": "ウォークスルークローゼット",
+    "min": "2畳",
+    "standard": "3畳",
+    "roomy": "4畳以上",
+    "note": "通り抜け動線を取るなら収納奥行600＋通路800以上を見る。"
+},
+{
+    "id": "family-closet",
+    "category": "部屋広さ",
+    "name": "ファミリークローゼット",
+    "min": "2畳",
+    "standard": "3〜4畳",
+    "roomy": "5畳以上",
+    "note": "洗濯動線と近いと使いやすい。家族分の服をまとめる収納。"
+},
+{
+    "id": "kids-play-room",
+    "category": "部屋広さ",
+    "name": "子ども遊び場",
+    "min": "2畳",
+    "standard": "3〜4.5畳",
+    "roomy": "6畳以上",
+    "note": "LDKから見える位置にすると見守りやすい。収納もセットで考える。"
+},
+{
+    "id": "study-corner-room",
+    "category": "部屋広さ",
+    "name": "スタディコーナー",
+    "min": "幅1200×奥行900",
+    "standard": "幅1800×奥行1200",
+    "roomy": "幅2700×奥行1500",
+    "note": "机奥行600＋椅子後ろ600を最低ラインにすると考えやすい。"
+},
+{
+    "id": "hobby-room",
+    "category": "部屋広さ",
+    "name": "趣味室",
+    "min": "3畳",
+    "standard": "4.5〜6畳",
+    "roomy": "8畳以上",
+    "note": "作業机、収納、音や匂いの条件を用途に合わせて見る。"
+},
+{
+    "id": "workshop-room",
+    "category": "部屋広さ",
+    "name": "作業室・工房",
+    "min": "4.5畳",
+    "standard": "6〜8畳",
+    "roomy": "10畳以上",
+    "note": "作業台、工具収納、換気、搬入動線をまとめて考える。"
+},
+{
+    "id": "semi-basement-room",
+    "category": "部屋広さ",
+    "name": "半地下室",
+    "min": "6畳",
+    "standard": "8〜12畳",
+    "roomy": "16畳以上",
+    "note": "採光、換気、階段、天井高さをセットで見る。"
+},
+{
+    "id": "cafe-seat-area",
+    "category": "部屋広さ",
+    "name": "カフェ客席",
+    "min": "10㎡程度",
+    "standard": "15〜30㎡",
+    "roomy": "40㎡以上",
+    "note": "席数はテーブル寸法だけでなく、通路幅とレジ前動線で決まる。"
+},
+{
+    "id": "small-cafe",
+    "category": "部屋広さ",
+    "name": "小規模カフェ全体",
+    "min": "20㎡前後",
+    "standard": "30〜50㎡",
+    "roomy": "60㎡以上",
+    "note": "客席、厨房、レジ、トイレ、バックヤードの割合を考える。"
+},
+{
+    "id": "cafe-kitchen-room",
+    "category": "部屋広さ",
+    "name": "カフェ厨房",
+    "min": "4㎡程度",
+    "standard": "6〜10㎡",
+    "roomy": "12㎡以上",
+    "note": "一人作業か複数人作業かで必要通路幅が変わる。"
+},
+{
+    "id": "cafe-backyard-room",
+    "category": "部屋広さ",
+    "name": "カフェバックヤード",
+    "min": "2㎡",
+    "standard": "3〜6㎡",
+    "roomy": "8㎡以上",
+    "note": "在庫、掃除道具、スタッフ荷物、給湯などを置く場所。"
+},
+{
+    "id": "waiting-room",
+    "category": "部屋広さ",
+    "name": "待合スペース",
+    "min": "2㎡",
+    "standard": "4〜6㎡",
+    "roomy": "8㎡以上",
+    "note": "店舗やクリニック風の計画で使える。椅子と通路を分けて考える。"
+},
+{
+    "id": "terrace-room",
+    "category": "部屋広さ",
+    "name": "テラス席・屋外居場所",
+    "min": "3㎡",
+    "standard": "6〜10㎡",
+    "roomy": "12㎡以上",
+    "note": "椅子を引く寸法、植栽、軒や庇の出をセットで見る。"
+},
+{
+    "id": "balcony-room",
+    "category": "部屋広さ",
+    "name": "バルコニー",
+    "min": "奥行900",
+    "standard": "奥行1200〜1500",
+    "roomy": "奥行1800以上",
+    "note": "物干しだけなら900、椅子を置くなら1500以上あると使いやすい。"
+},
+{
+    "id": "engawa-room",
+    "category": "部屋広さ",
+    "name": "縁側空間",
+    "min": "奥行910",
+    "standard": "奥行1365〜1820",
+    "roomy": "奥行2000以上",
+    "note": "通るだけか、座るか、外部とつなげるかで必要奥行が変わる。"
+},
+{
+    "id": "bicycle-doma-room",
+    "category": "部屋広さ",
+    "name": "自転車土間",
+    "min": "1台：900×2000",
+    "standard": "2台：1800×2000程度",
+    "roomy": "整備スペース込みで6畳程度",
+    "note": "ハンドル幅と出し入れ動線を見て、玄関と干渉しない位置にする。"
+},
+{
+    "id": "pet-room",
+    "category": "部屋広さ",
+    "name": "ペットスペース",
+    "min": "1畳",
+    "standard": "2〜3畳",
+    "roomy": "4.5畳以上",
+    "note": "足洗い場、ケージ、食事スペース、外部動線とつなげると便利。"
+},
+{
+    "id": "senior-room",
+    "category": "部屋広さ",
+    "name": "高齢者個室",
+    "min": "6畳",
+    "standard": "8畳",
+    "roomy": "8畳以上＋トイレ近接",
+    "note": "ベッド周り通路、手すり、トイレまでの距離を重視する。"
+},
+{
+    "id": "wheelchair-bedroom",
+    "category": "部屋広さ",
+    "name": "車椅子対応寝室",
+    "min": "8畳",
+    "standard": "10畳",
+    "roomy": "12畳以上",
+    "note": "ベッド横通路900、回転1500を確保できるか見る。"
+},
+{
+    "id": "garage-room",
+    "category": "部屋広さ",
+    "name": "ガレージ",
+    "min": "1台：3000×5500",
+    "standard": "1台：3500×6000",
+    "roomy": "作業場込みで4000×6500以上",
+    "note": "車寸法だけでなく、ドア開閉と収納・作業スペースを見る。"
+},
+{
+    "id": "tv-32",
+    "category": "家具",
+    "name": "テレビ 32インチ",
+    "min": "幅730 / H430前後",
+    "standard": "視聴距離1000〜1500",
+    "roomy": "個室・寝室向き",
+    "note": "子ども部屋や寝室に置きやすいサイズ。TV台は幅900以上あると安定。"
+},
+{
+    "id": "tv-43",
+    "category": "家具",
+    "name": "テレビ 43インチ",
+    "min": "幅960 / H560前後",
+    "standard": "視聴距離1500〜2000",
+    "roomy": "小さめリビング向き",
+    "note": "リビングに置くならTV台幅1200〜1500程度が合わせやすい。"
+},
+{
+    "id": "tv-50",
+    "category": "家具",
+    "name": "テレビ 50インチ",
+    "min": "幅1120 / H650前後",
+    "standard": "視聴距離1800〜2500",
+    "roomy": "LDK向き",
+    "note": "設計課題では50インチを置くとリビングのスケールが伝わりやすい。"
+},
+{
+    "id": "tv-55",
+    "category": "家具",
+    "name": "テレビ 55インチ",
+    "min": "幅1230 / H710前後",
+    "standard": "視聴距離2000〜2800",
+    "roomy": "広めLDK向き",
+    "note": "TV台は幅1500〜1800以上あると見た目のバランスが良い。"
+},
+{
+    "id": "tv-65",
+    "category": "家具",
+    "name": "テレビ 65インチ",
+    "min": "幅1450 / H840前後",
+    "standard": "視聴距離2500〜3300",
+    "roomy": "大きめLDK・シアター向き",
+    "note": "壁面幅とソファまでの距離を先に確認する。"
+},
+{
+    "id": "tv-board-furniture",
+    "category": "家具",
+    "name": "テレビ台",
+    "min": "幅1000 / 奥行350 / H350",
+    "standard": "幅1500〜1800 / 奥行400 / H400",
+    "roomy": "幅2000以上 / 奥行450 / H350〜450",
+    "note": "テレビより左右に余白があると安定して見える。50インチなら幅1500以上が目安。"
+},
+{
+    "id": "wall-mounted-tv",
+    "category": "家具",
+    "name": "壁掛けテレビ",
+    "min": "中心H1000前後",
+    "standard": "中心H1000〜1200 / 視聴距離2000以上",
+    "roomy": "収納壁・造作壁と一体化",
+    "note": "座った目線に合わせる。配線スペースや下地補強も考える。"
+},
+{
+    "id": "one-seat-sofa",
+    "category": "家具",
+    "name": "1人掛けソファ",
+    "min": "幅700 / 奥行750 / 座面H400",
+    "standard": "幅800〜900 / 奥行800〜900 / 座面H400",
+    "roomy": "幅1000 / 奥行950",
+    "note": "読書コーナーや寝室、カフェ席に置きやすい。"
+},
+{
+    "id": "two-seat-sofa",
+    "category": "家具",
+    "name": "2人掛けソファ",
+    "min": "幅1200 / 奥行750 / 座面H400",
+    "standard": "幅1400〜1600 / 奥行800〜900",
+    "roomy": "幅1800 / 奥行950",
+    "note": "小さめLDKや待合スペースに使いやすい。前に600〜800空ける。"
+},
+{
+    "id": "three-seat-sofa",
+    "category": "家具",
+    "name": "3人掛けソファ",
+    "min": "幅1800 / 奥行800",
+    "standard": "幅2000〜2200 / 奥行850〜950",
+    "roomy": "幅2400以上 / 奥行1000",
+    "note": "リビングの主役。TV台との距離も一緒に確認する。"
+},
+{
+    "id": "l-shape-sofa",
+    "category": "家具",
+    "name": "L字ソファ",
+    "min": "幅2000×奥行1400",
+    "standard": "幅2400×奥行1600〜1800",
+    "roomy": "幅2800以上×奥行2000",
+    "note": "広めLDK向き。角に置くか、空間を区切る家具として使える。"
+},
+{
+    "id": "work-chair",
+    "category": "家具",
+    "name": "ワークチェア",
+    "min": "幅550 / 奥行550 / 座面H420",
+    "standard": "幅600〜700 / 奥行600〜700",
+    "roomy": "幅750 / 奥行750",
+    "note": "机後ろに600〜800空けると座りやすい。"
+},
+{
+    "id": "counter-chair",
+    "category": "家具",
+    "name": "カウンターチェア",
+    "min": "幅400 / 奥行400 / 座面H600",
+    "standard": "幅450 / 奥行450 / 座面H650〜750",
+    "roomy": "幅500 / 奥行500",
+    "note": "カウンター高さ900〜1050に合わせて座面高さを選ぶ。"
+},
+{
+    "id": "bench-furniture",
+    "category": "家具",
+    "name": "ベンチ",
+    "min": "幅900 / 奥行350 / H400",
+    "standard": "幅1200〜1800 / 奥行400 / H420",
+    "roomy": "幅2000以上 / 奥行450",
+    "note": "玄関・縁側・カフェ待合に使いやすい。"
+},
+{
+    "id": "night-table",
+    "category": "家具",
+    "name": "ナイトテーブル",
+    "min": "幅300 / 奥行300 / H450",
+    "standard": "幅400〜500 / 奥行350〜400 / H500",
+    "roomy": "幅600 / 奥行450",
+    "note": "ベッド横に置く。通路600を残せるか確認する。"
+},
+{
+    "id": "chest",
+    "category": "家具",
+    "name": "チェスト",
+    "min": "幅600 / 奥行400 / H800",
+    "standard": "幅900 / 奥行450 / H900〜1200",
+    "roomy": "幅1200 / 奥行500 / H1200",
+    "note": "寝室・子ども部屋・ファミクロに置く収納家具。"
+},
+{
+    "id": "cabinet",
+    "category": "家具",
+    "name": "キャビネット",
+    "min": "幅600 / 奥行350 / H800",
+    "standard": "幅900〜1200 / 奥行400〜450 / H900",
+    "roomy": "幅1800 / 奥行450",
+    "note": "リビング収納やカフェ物販棚にも使いやすい。"
+},
+{
+    "id": "open-shelf",
+    "category": "家具",
+    "name": "オープン棚",
+    "min": "幅600 / 奥行300 / H900",
+    "standard": "幅900〜1200 / 奥行300〜350 / H1500",
+    "roomy": "幅1800 / H1800以上",
+    "note": "本・小物・カフェ物販を見せる収納として使える。"
+},
+{
+    "id": "storage-box",
+    "category": "家具",
+    "name": "収納ボックス",
+    "min": "幅300 / 奥行300 / H300",
+    "standard": "幅400〜600 / 奥行400 / H300〜400",
+    "roomy": "幅900 / 奥行450",
+    "note": "子ども遊び場や収納棚内の目安に使いやすい。"
+},
+{
+    "id": "bunk-bed",
+    "category": "家具",
+    "name": "二段ベッド",
+    "min": "幅1000 / 奥行2000 / H1600",
+    "standard": "幅1050 / 奥行2100 / H1700",
+    "roomy": "幅1100 / 奥行2200 / H1800",
+    "note": "子ども部屋に置く場合、はしご前と天井高さを確認する。"
+},
+{
+    "id": "loft-bed",
+    "category": "家具",
+    "name": "ロフトベッド",
+    "min": "幅1000 / 奥行2000 / H1500",
+    "standard": "幅1050 / 奥行2100 / H1800",
+    "roomy": "幅1100 / 奥行2200 / H2000",
+    "note": "下部に机や収納を入れられる。天井高さに注意。"
+},
+{
+    "id": "futon",
+    "category": "家具",
+    "name": "布団",
+    "min": "シングル：1000×2000",
+    "standard": "敷く＋収納動線を見る",
+    "roomy": "2組なら2000×2000以上",
+    "note": "和室や客間で使う。押入れ寸法とセットで考える。"
+},
+{
+    "id": "kotatsu",
+    "category": "家具",
+    "name": "こたつ",
+    "min": "750×750 / H380",
+    "standard": "900×900 / H380〜400",
+    "roomy": "1200×800 / H400",
+    "note": "和室や畳コーナーに置く。周囲に座る余白が必要。"
+},
+{
+    "id": "rug",
+    "category": "家具",
+    "name": "ラグ",
+    "min": "1400×2000",
+    "standard": "1600×2300〜2000×2500",
+    "roomy": "2400×3000",
+    "note": "ソファ前や子ども遊び場に敷くと空間のまとまりが出る。"
+},
+{
+    "id": "kids-desk",
+    "category": "家具",
+    "name": "子ども机",
+    "min": "幅800 / 奥行500 / H650",
+    "standard": "幅900〜1000 / 奥行550〜600 / H700",
+    "roomy": "幅1200 / 奥行600",
+    "note": "成長後も使うなら標準の学習机寸法に近づける。"
+},
+{
+    "id": "kids-chair",
+    "category": "家具",
+    "name": "キッズチェア",
+    "min": "幅300 / 奥行300 / 座面H250",
+    "standard": "幅350 / 奥行350 / 座面H300",
+    "roomy": "幅400 / 奥行400",
+    "note": "子ども遊び場や低い机と合わせる。"
+},
+{
+    "id": "play-table",
+    "category": "家具",
+    "name": "プレイテーブル",
+    "min": "幅600 / 奥行600 / H400",
+    "standard": "幅900 / 奥行600 / H450",
+    "roomy": "幅1200 / 奥行800",
+    "note": "子どもスペースに置くと遊び場の用途が伝わりやすい。"
+},
+{
+    "id": "zaisu",
+    "category": "家具",
+    "name": "座椅子",
+    "min": "幅450 / 奥行500",
+    "standard": "幅500〜600 / 奥行600〜700",
+    "roomy": "幅700 / 奥行800",
+    "note": "和室や畳コーナーで床座の家具として使える。"
+},
+{
+    "id": "chabudai",
+    "category": "家具",
+    "name": "ちゃぶ台",
+    "min": "直径600 / H300",
+    "standard": "直径750〜900 / H330",
+    "roomy": "直径1000以上",
+    "note": "和室や縁側近くに置くと生活感が出る。"
+}];
+
+const customDimensions = JSON.parse(localStorage.getItem("customDimensions") || "[]");
+
+
+const defaultCollapsedCategories = [
+  "収納",
+  "ベッド",
+  "高さ",
+  "外構",
+  "外構・駐車",
+  "住宅設備",
+  "店舗・カフェ",
+  "バリアフリー",
+  "構造",
+  "耐力壁",
+  "基礎",
+  "屋根・小屋組",
+  "接合金物",
+  "図面表現",
+  "小物"
+];
+
+function getInitialCollapsedCategories() {
+  const saved = localStorage.getItem("collapsedCategories");
+  if (saved) return JSON.parse(saved);
+  return [...defaultCollapsedCategories];
+}
+
+const state = {
+  category: "すべて",
+  query: "",
+  favorites: JSON.parse(localStorage.getItem("favorites") || "[]"),
+  collapsedCategories: getInitialCollapsedCategories(),
+  viewMode: localStorage.getItem("viewMode") || "grid",
+  collapsedTools: JSON.parse(localStorage.getItem("collapsedTools") || "[]")
+};
+
+function allDimensions() {
+  return [...dimensions, ...customDimensions];
+}
+
+function currentCategories() {
+  return ["すべて", ...Array.from(new Set(allDimensions().map(item => item.category)))];
+}
+
+const $ = (selector) => document.querySelector(selector);
+const itemsEl = $("#items");
+const chipsEl = $("#categoryChips");
+const hitCountEl = $("#hitCount");
+
+
+function applyViewMode() {
+  document.body.classList.toggle("view-large", state.viewMode === "large");
+  document.body.classList.toggle("view-grid", state.viewMode === "grid");
+  const button = $("#viewToggle");
+  if (button) {
+    button.classList.toggle("large-active", state.viewMode === "large");
+    button.setAttribute("title", state.viewMode === "large" ? "小さく表示" : "大きく表示");
+  }
+}
+
+function toggleViewMode() {
+  state.viewMode = state.viewMode === "grid" ? "large" : "grid";
+  localStorage.setItem("viewMode", state.viewMode);
+  applyViewMode();
+}
+
+
+function initializeCategoryModal() {
+  document.getElementById("openCategoryModal")?.addEventListener("click", openCategoryModal);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeCategoryModal();
+  });
+}
+
+
+
+function saveCollapsedTools() {
+  localStorage.setItem("collapsedTools", JSON.stringify(state.collapsedTools));
+}
+
+function isToolCollapsed(toolName) {
+  return state.collapsedTools.includes(toolName);
+}
+
+function toggleToolCard(toolName) {
+  if (isToolCollapsed(toolName)) {
+    state.collapsedTools = state.collapsedTools.filter(item => item !== toolName);
+  } else {
+    state.collapsedTools.push(toolName);
+  }
+  saveCollapsedTools();
+  applyToolCollapse();
+}
+
+function applyToolCollapse() {
+  ["calculator", "memo"].forEach(toolName => {
+    const card = document.querySelector(`[data-tool="${toolName}"]`);
+    const mark = document.getElementById(`${toolName}Mark`);
+    const collapsed = isToolCollapsed(toolName);
+    card?.classList.toggle("tool-collapsed", collapsed);
+    if (mark) mark.textContent = collapsed ? "開く" : "閉じる";
+  });
+}
+
+
+function saveFavorites() {
+  localStorage.setItem("favorites", JSON.stringify(state.favorites));
+}
+
+function saveCollapsedCategories() {
+  localStorage.setItem("collapsedCategories", JSON.stringify(state.collapsedCategories));
+}
+
+function isCollapsed(category) {
+  return state.collapsedCategories.includes(category);
+}
+
+function toggleCategory(category) {
+  if (isCollapsed(category)) {
+    state.collapsedCategories = state.collapsedCategories.filter(item => item !== category);
+  } else {
+    state.collapsedCategories.push(category);
+  }
+  saveCollapsedCategories();
+  renderItems();
+}
+
+function isFav(id) {
+  return state.favorites.includes(id);
+}
+
+function toggleFav(id) {
+  if (isFav(id)) {
+    state.favorites = state.favorites.filter(x => x !== id);
+  } else {
+    state.favorites.push(id);
+  }
+  saveFavorites();
+  render();
+}
+
+function itemCard(item) {
+  const active = isFav(item.id) ? "active" : "";
+  const star = isFav(item.id) ? "★" : "☆";
+  const favBadge = isFav(item.id) ? `<span class="fav-badge">お気に入り</span>` : "";
+  const customBadge = item.custom ? `<span class="custom-badge">追加寸法</span>` : "";
+  const restoreButton = item.custom ? `<button class="restore-btn" type="button" onclick="restoreCustomToForm('${item.id}')">編集</button>` : "";
+  const deleteButton = item.custom ? `<button class="delete-btn" type="button" onclick="deleteCustom('${item.id}')">削除</button>` : "";
+  return `
+    <article class="item-card ${active ? "fav-card" : ""}">
+      <div class="item-top">
+        <h3>${item.name}</h3>
+        <div class="card-actions">
+          ${restoreButton}
+          ${deleteButton}
+          <button class="star ${active}" type="button" aria-label="お気に入り" onclick="toggleFav('${item.id}')">${star}</button>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="category">${item.category}</span>
+        ${favBadge}
+        ${customBadge}
+      </div>
+      <table class="dim-table">
+        <tr><th>最低</th><td>${item.min}</td></tr>
+        <tr><th>標準</th><td>${item.standard}</td></tr>
+        <tr><th>ゆったり</th><td>${item.roomy}</td></tr>
+      </table>
+      <p class="note">${item.note}</p>
+    </article>
+  `;
+}
+
+function escapeForOnclick(text) {
+  return String(text).replaceAll("\\", "\\\\").replaceAll("'", "\\'");
+}
+
+
+function makeCategoryAnchor(text) {
+  return "category-" + String(text).replaceAll("★", "fav").replaceAll(" ", "-").replaceAll("・", "-").replaceAll("/", "-").replaceAll("　", "-");
+}
+
+function openCategoryModal() {
+  renderCategoryModalList();
+  const modal = $("#categoryModal");
+  if (!modal) return;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeCategoryModal() {
+  const modal = document.getElementById("categoryModal");
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+function renderCategoryModalList() {
+  const categories = currentCategories().filter(category => category !== "すべて");
+  const list = categories.map(category => {
+    const count = allDimensions().filter(item => item.category === category).length;
+    return `
+      <button type="button" onclick="jumpToCategory('${escapeForOnclick(category)}')">
+        <strong>${category}</strong>
+        <span>${count}件</span>
+      </button>
+    `;
+  }).join("");
+
+  const favCount = state.favorites.length;
+  const favoriteButton = favCount
+    ? `
+      <button type="button" onclick="jumpToCategory('★ お気に入り')">
+        <strong>★ お気に入り</strong>
+        <span>${favCount}件</span>
+      </button>
+    `
+    : "";
+
+  const modalList = $("#categoryModalList");
+  if (modalList) {
+    modalList.innerHTML = favoriteButton + list;
+  }
+}
+
+function jumpToCategory(category) {
+  closeCategoryModal();
+
+  if (category !== "★ お気に入り") {
+    state.category = "すべて";
+    if (isCollapsed(category)) {
+      state.collapsedCategories = state.collapsedCategories.filter(item => item !== category);
+      saveCollapsedCategories();
+    }
+  }
+  render();
+
+  const anchor = makeCategoryAnchor(category);
+  setTimeout(() => {
+    document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 60);
+}
+
+
+function filteredItems() {
+  const q = state.query.trim().toLowerCase();
+  return allDimensions()
+    .filter(item => {
+      const categoryMatch = state.category === "すべて" || item.category === state.category;
+      const text = `${item.name} ${item.category} ${item.min} ${item.standard} ${item.roomy} ${item.note}`.toLowerCase();
+      return categoryMatch && (!q || text.includes(q));
+    })
+    .sort((a, b) => {
+      const favSort = Number(isFav(b.id)) - Number(isFav(a.id));
+      if (favSort !== 0) return favSort;
+      return Number(a.custom || false) - Number(b.custom || false);
+    });
+}
+
+function renderChips() {
+  chipsEl.innerHTML = currentCategories().map(category => {
+    const active = state.category === category ? "active" : "";
+    return `<button class="chip ${active}" type="button" data-category="${category}">${category}</button>`;
+  }).join("");
+
+  chipsEl.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      state.category = chip.dataset.category;
+      render();
+    });
+  });
+}
+
+function renderItems() {
+  const list = filteredItems();
+  hitCountEl.textContent = `${list.length}件`;
+
+  if (!list.length) {
+    itemsEl.innerHTML = `<div class="empty">該当する寸法がありません。</div>`;
+    return;
+  }
+
+  const groups = [];
+  const groupMap = new Map();
+
+  list.forEach(item => {
+    const groupName = isFav(item.id) ? "★ お気に入り" : item.category;
+    if (!groupMap.has(groupName)) {
+      const group = { name: groupName, items: [] };
+      groups.push(group);
+      groupMap.set(groupName, group);
+    }
+    groupMap.get(groupName).items.push(item);
+  });
+
+  itemsEl.innerHTML = groups.map(group => {
+    const collapsed = isCollapsed(group.name) ? "collapsed" : "";
+    const mark = isCollapsed(group.name) ? "開く" : "閉じる";
+    return `
+      <section id="${makeCategoryAnchor(group.name)}" data-category="${group.name}" class="category-section ${collapsed}">
+        <button class="category-header" type="button" onclick="toggleCategory('${escapeForOnclick(group.name)}')">
+          <span class="category-heading">
+            <strong>${group.name}</strong>
+            <span class="category-count">${group.items.length}件</span>
+          </span>
+          <span class="category-toggle">${mark}</span>
+        </button>
+        <div class="category-body">
+          ${group.items.map(itemCard).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+}
+
+
+function saveCustomDimensions() {
+  localStorage.setItem("customDimensions", JSON.stringify(customDimensions));
+}
+
+
+
+function addCustomDimension() {
+  const name = $("#customName").value.trim();
+  const category = $("#customCategory").value.trim() || "追加";
+  const min = $("#customMin").value.trim() || "未入力";
+  const standard = $("#customStandard").value.trim() || "未入力";
+  const roomy = $("#customRoomy").value.trim() || "未入力";
+  const note = $("#customNote").value.trim() || "メモなし";
+
+  if (!name) {
+    $("#customStatus").textContent = "名前だけは入れてください";
+    return;
+  }
+
+  customDimensions.push({
+    id: `custom-${Date.now()}`,
+    custom: true,
+    category,
+    name,
+    min,
+    standard,
+    roomy,
+    note
+  });
+
+  saveCustomDimensions();
+  clearCustomForm();
+  $("#customStatus").textContent = "追加しました";
+  setTimeout(() => $("#customStatus").textContent = "", 1400);
+  render();
+}
+
+function clearCustomForm() {
+  ["customName", "customCategory", "customMin", "customStandard", "customRoomy", "customNote"].forEach(id => {
+    $(`#${id}`).value = "";
+  });
+}
+
+
+function restoreCustomToForm(id) {
+  const index = customDimensions.findIndex(item => item.id === id);
+  if (index < 0) return;
+
+  const item = customDimensions[index];
+
+  $("#customName").value = item.name || "";
+  $("#customCategory").value = item.category || "";
+  $("#customMin").value = item.min || "";
+  $("#customStandard").value = item.standard || "";
+  $("#customRoomy").value = item.roomy || "";
+  $("#customNote").value = item.note || "";
+
+  customDimensions.splice(index, 1);
+  state.favorites = state.favorites.filter(favId => favId !== id);
+  saveCustomDimensions();
+  saveFavorites();
+  render();
+
+  $("#customStatus").textContent = "編集できます。直してから追加してください";
+  document.getElementById("customPreset")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function deleteCustom(id) {
+  const index = customDimensions.findIndex(item => item.id === id);
+  if (index >= 0) {
+    customDimensions.splice(index, 1);
+    state.favorites = state.favorites.filter(favId => favId !== id);
+    saveCustomDimensions();
+    saveFavorites();
+    render();
+  }
+}
+
+function render() {
+  renderChips();
+  renderItems();
+}
+
+$("#searchInput").addEventListener("input", (e) => {
+  state.query = e.target.value;
+  renderItems();
+});
+
+$("#clearSearch").addEventListener("click", () => {
+  $("#searchInput").value = "";
+  state.query = "";
+  renderItems();
+});
+
+
+
+const calcPresets = {
+  module: {
+    title: "910モジュール換算",
+    fields: [
+      { id: "grid", label: "グリッド数", value: 1, step: 0.5, unit: "グリッド" },
+      { id: "moduleSize", label: "1グリッド", value: 910, step: 1, unit: "mm" }
+    ],
+    calc(values) {
+      const mm = values.grid * values.moduleSize;
+      return [
+        [`寸法`, `${formatNumber(mm)} mm`],
+        [`m換算`, `${formatNumber(mm / 1000, 3)} m`],
+        [`メモ`, `910なら ${values.grid} グリッド = ${formatNumber(values.grid * 910)} mm`]
+      ];
+    }
+  },
+  slopeRise: {
+    title: "勾配から高さ",
+    fields: [
+      { id: "run", label: "水平距離", value: 4000, step: 10, unit: "mm" },
+      { id: "sun", label: "寸勾配", value: 3, step: 0.5, unit: "寸" }
+    ],
+    calc(values) {
+      const rise = values.run * values.sun / 10;
+      const angle = Math.atan(rise / values.run) * 180 / Math.PI;
+      return [
+        [`上がり高さ`, `${formatNumber(rise)} mm`],
+        [`角度`, `${formatNumber(angle, 2)}°`],
+        [`メモ`, `${values.sun}寸勾配 = 水平10に対して高さ${values.sun}`]
+      ];
+    }
+  },
+  slopeSun: {
+    title: "高さから寸勾配",
+    fields: [
+      { id: "run", label: "水平距離", value: 4000, step: 10, unit: "mm" },
+      { id: "rise", label: "上がり高さ", value: 1200, step: 10, unit: "mm" }
+    ],
+    calc(values) {
+      const sun = values.run ? values.rise / values.run * 10 : 0;
+      const angle = Math.atan(values.rise / values.run) * 180 / Math.PI;
+      return [
+        [`寸勾配`, `${formatNumber(sun, 2)} 寸`],
+        [`角度`, `${formatNumber(angle, 2)}°`],
+        [`メモ`, `3寸なら緩め、4寸前後は住宅屋根でよく見る目安`]
+      ];
+    }
+  },
+  roofHigh: {
+    title: "屋根最高高さ",
+    fields: [
+      { id: "baseHeight", label: "軒・低い側の高さ", value: 3000, step: 10, unit: "mm" },
+      { id: "run", label: "水平距離", value: 4000, step: 10, unit: "mm" },
+      { id: "sun", label: "寸勾配", value: 3, step: 0.5, unit: "寸" }
+    ],
+    calc(values) {
+      const rise = values.run * values.sun / 10;
+      const high = values.baseHeight + rise;
+      return [
+        [`上がり高さ`, `${formatNumber(rise)} mm`],
+        [`最高高さ`, `${formatNumber(high)} mm`],
+        [`m換算`, `${formatNumber(high / 1000, 3)} m`]
+      ];
+    }
+  },
+  area: {
+    title: "面積 → 坪・畳",
+    fields: [
+      { id: "width", label: "幅", value: 3640, step: 10, unit: "mm" },
+      { id: "depth", label: "奥行", value: 3640, step: 10, unit: "mm" }
+    ],
+    calc(values) {
+      const sqm = values.width * values.depth / 1000000;
+      const tsubo = sqm / 3.305785;
+      const jo = sqm / 1.62;
+      return [
+        [`面積`, `${formatNumber(sqm, 2)} ㎡`],
+        [`坪`, `${formatNumber(tsubo, 2)} 坪`],
+        [`畳`, `${formatNumber(jo, 1)} 畳くらい`]
+      ];
+    }
+  },
+  scale: {
+    title: "実寸 → 図面寸法",
+    fields: [
+      { id: "real", label: "実寸", value: 910, step: 10, unit: "mm" },
+      { id: "scale", label: "縮尺", value: 50, step: 1, unit: "分の1" }
+    ],
+    calc(values) {
+      const drawing = values.real / values.scale;
+      return [
+        [`図面上の長さ`, `${formatNumber(drawing, 2)} mm`],
+        [`1mの図面寸法`, `${formatNumber(1000 / values.scale, 2)} mm`],
+        [`メモ`, `1/${values.scale} の図面では実寸 ÷ ${values.scale}`]
+      ];
+    }
+  },
+  stair: {
+    title: "階段ざっくり",
+    fields: [
+      { id: "height", label: "上がる高さ", value: 3000, step: 10, unit: "mm" },
+      {
+        id: "comfort",
+        label: "階段タイプ",
+        type: "select",
+        value: "standard",
+        options: [
+          { value: "min", label: "最低：省スペース" },
+          { value: "standard", label: "標準：住宅で使いやすい" },
+          { value: "roomy", label: "ゆったり：上りやすい" },
+          { value: "custom", label: "手入力" }
+        ],
+        unit: ""
+      },
+      { id: "riser", label: "蹴上", value: 190, step: 1, unit: "mm" },
+      { id: "tread", label: "踏面", value: 240, step: 1, unit: "mm" }
+    ],
+    calc(values) {
+      const presets = {
+        min: { targetRiser: 200, tread: 210, label: "最低：省スペース" },
+        standard: { targetRiser: 190, tread: 240, label: "標準：住宅で使いやすい" },
+        roomy: { targetRiser: 170, tread: 270, label: "ゆったり：上りやすい" },
+        custom: { targetRiser: values.riser || 190, tread: values.tread || 240, label: "手入力" }
+      };
+
+      const selected = presets[values.comfort] || presets.standard;
+      const targetRiser = selected.targetRiser;
+      const tread = selected.tread;
+      const steps = Math.max(1, Math.ceil(values.height / targetRiser));
+      const actualRiser = values.height / steps;
+      const run = Math.max(steps - 1, 0) * tread;
+      const stairRule = actualRiser * 2 + tread;
+
+      return [
+        [`選択タイプ`, selected.label],
+        [`段数目安`, `${steps} 段`],
+        [`蹴上`, `${formatNumber(actualRiser, 1)} mm`],
+        [`踏面`, `${formatNumber(tread)} mm`],
+        [`必要水平長さ`, `${formatNumber(run)} mm`],
+        [`勾配感`, `蹴上×2＋踏面 = ${formatNumber(stairRule, 1)} mm`],
+        [`メモ`, `高さだけ入れれば、タイプに合わせて段数・蹴上・踏面を自動計算します。`]
+      ];
+    }
+  }
+};
+
+function formatNumber(value, digits = 0) {
+  if (!Number.isFinite(value)) return "0";
+  return Number(value).toLocaleString(undefined, {
+    maximumFractionDigits: digits,
+    minimumFractionDigits: digits
+  });
+}
+
+function renderCalculator() {
+  const presetKey = $("#calcPreset")?.value || "stair";
+  const preset = calcPresets[presetKey];
+  if (!preset) return;
+
+  $("#calcFields").innerHTML = preset.fields.map(field => {
+    if (field.type === "select") {
+      return `
+        <label class="calc-field">
+          <span>${field.label}</span>
+          <div class="calc-input-row">
+            <select id="calc-${field.id}" class="calc-select mini-select">
+              ${field.options.map(option => `<option value="${option.value}" ${option.value === field.value ? "selected" : ""}>${option.label}</option>`).join("")}
+            </select>
+            <em>${field.unit || ""}</em>
+          </div>
+        </label>
+      `;
+    }
+
+    return `
+      <label class="calc-field">
+        <span>${field.label}</span>
+        <div class="calc-input-row">
+          <input id="calc-${field.id}" type="number" step="${field.step}" value="${field.value}" />
+          <em>${field.unit}</em>
+        </div>
+      </label>
+    `;
+  }).join("");
+
+  preset.fields.forEach(field => {
+    const input = $(`#calc-${field.id}`);
+    input?.addEventListener("input", updateCalculator);
+    input?.addEventListener("change", updateCalculator);
+  });
+
+  updateCalculator();
+}
+
+function updateCalculator() {
+  const presetKey = $("#calcPreset")?.value || "stair";
+  const preset = calcPresets[presetKey];
+  if (!preset) return;
+
+  const values = {};
+  preset.fields.forEach(field => {
+    const rawValue = $(`#calc-${field.id}`)?.value;
+    values[field.id] = field.type === "select" ? rawValue : Number(rawValue || 0);
+  });
+
+  const rows = preset.calc(values);
+  $("#calcAnswer").innerHTML = `
+    <h3>${preset.title}</h3>
+    <table>
+      ${rows.map(([label, value]) => `<tr><th>${label}</th><td>${value}</td></tr>`).join("")}
+    </table>
+  `;
+}
+
+$("#calcPreset")?.addEventListener("change", renderCalculator);
+
+const memoInput = $("#memoInput");
+memoInput.value = localStorage.getItem("myMemo") || "";
+
+$("#saveMemo").addEventListener("click", () => {
+  localStorage.setItem("myMemo", memoInput.value);
+  $("#saveStatus").textContent = "保存しました";
+  setTimeout(() => $("#saveStatus").textContent = "", 1400);
+});
+
+$("#addCustom").addEventListener("click", addCustomDimension);
+$("#clearCustomForm").addEventListener("click", () => {
+  clearCustomForm();
+  $("#customStatus").textContent = "";
+});
+
+$("#viewToggle")?.addEventListener("click", toggleViewMode);
+initializeCategoryModal();
+
+$("#openAllCategories")?.addEventListener("click", () => {
+  state.collapsedCategories = [];
+  saveCollapsedCategories();
+  renderItems();
+});
+
+$("#priorityOnlyCategories")?.addEventListener("click", () => {
+  state.collapsedCategories = [...defaultCollapsedCategories];
+  saveCollapsedCategories();
+  renderItems();
+});
+
+
+$("#closeAllCategories")?.addEventListener("click", () => {
+  state.collapsedCategories = currentCategories().filter(category => category !== "すべて");
+  const hasFavoritesVisible = filteredItems().some(item => isFav(item.id));
+  if (hasFavoritesVisible && !state.collapsedCategories.includes("★ お気に入り")) {
+    state.collapsedCategories.push("★ お気に入り");
+  }
+  saveCollapsedCategories();
+  renderItems();
+});
+
+window.toggleFav = toggleFav;
+window.toggleCategory = toggleCategory;
+window.toggleToolCard = toggleToolCard;
+window.jumpToCategory = jumpToCategory;
+window.closeCategoryModal = closeCategoryModal;
+window.restoreCustomToForm = restoreCustomToForm;
+window.deleteCustom = deleteCustom;
+applyViewMode();
+renderCalculator();
+render();
+
+
+
+
+
+
+
+
+
+
+</script>
+<div aria-hidden="true" class="modal-overlay" id="categoryModal" onclick="closeCategoryModal()">
+<div aria-labelledby="categoryModalTitle" aria-modal="true" class="modal-window" onclick="event.stopPropagation()" role="dialog">
+<div class="modal-head">
+<h2 id="categoryModalTitle">カテゴリ一覧</h2>
+<button aria-label="閉じる" class="modal-close" id="closeCategoryModal" onclick="closeCategoryModal()" type="button">×</button>
+</div>
+<p class="modal-note">カテゴリを押すと、その場所まで移動します。</p>
+<div class="modal-list" id="categoryModalList"></div>
+</div>
+</div>
+</body>
+</html>

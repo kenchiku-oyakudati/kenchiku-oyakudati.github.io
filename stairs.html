@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>住宅階段の寸法まとめ｜建築寸法メモ</title>
+<meta content="住宅階段の幅、蹴上、踏面、踊り場、手すり高さなどの参考寸法を建築学生向けにまとめたページ。" name="description"/>
+<style>
+:root {
+  --bg: #f6f3ee;
+  --card: #fffaf2;
+  --text: #23201c;
+  --muted: #71675b;
+  --line: #e1d7c8;
+  --accent: #2f5f4f;
+  --accent-light: #dcece5;
+  --shadow: 0 12px 30px rgba(43, 36, 28, 0.08);
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+  background: radial-gradient(circle at top left, #fff8e9 0, #f6f3ee 38%, #eee9e1 100%);
+  color: var(--text);
+  line-height: 1.75;
+}
+.app-header {
+  padding: 34px 18px 24px;
+  background: linear-gradient(135deg, #254f43, #5b7d69);
+  color: white;
+}
+.app-header > div, .container, .footer {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  line-height: 1.08;
+}
+.lead {
+  margin: 12px 0 0;
+  max-width: 640px;
+  opacity: 0.92;
+}
+.container { padding: 18px; }
+.card {
+  background: rgba(255, 250, 242, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-top: 18px;
+}
+h2 { margin: 0 0 10px; color: var(--accent); }
+h3 { margin: 18px 0 8px; }
+p { margin: 0 0 12px; }
+ul { margin-top: 0; padding-left: 1.3em; }
+a { color: var(--accent); font-weight: 800; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.dim-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 12px; font-size: 0.95rem; }
+.dim-table th, .dim-table td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.dim-table th { color: var(--muted); width: 28%; }
+.notice { background: var(--accent-light); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.footer { padding: 20px 18px 36px; color: var(--muted); font-size: 0.9rem; }
+.footer-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.footer-links a { display: inline-block; padding: 9px 13px; border-radius: 999px; background: var(--accent-light); color: var(--accent); }
+@media (max-width: 640px) { .dim-table { font-size: 0.88rem; } .dim-table th, .dim-table td { padding: 8px 6px; } }
+</style>
+</head>
+<body>
+<header class="app-header">
+<div>
+<p class="eyebrow">建築学生向けメモ</p>
+<h1>住宅階段の寸法まとめ</h1>
+<p class="lead">平面図や断面図で住宅階段を描くときに使いやすい、幅・蹴上・踏面などの参考寸法です。</p>
+</div>
+</header>
+<main class="container">
+<section class="card">
+<h2>住宅階段でよく使う寸法</h2>
+<p>下の数値は、建築学生の設計課題で階段を計画するときの目安です。実際には建築基準法、用途、階高、先生の指示に合わせて確認してください。</p>
+<table class="dim-table">
+<tr><th>階段幅</th><td>最低750mm程度、設計課題では900mm、余裕を見るなら1000mm程度。</td></tr>
+<tr><th>蹴上</th><td>180〜200mm程度が使いやすい。ゆるめにしたい場合は170〜180mm程度。</td></tr>
+<tr><th>踏面</th><td>210mm以上を目安にし、課題では230〜240mm程度にすると描きやすい。</td></tr>
+<tr><th>段数</th><td>階高 ÷ 蹴上で考える。階高2700mmなら、蹴上約193mmで14段程度。</td></tr>
+<tr><th>踊り場</th><td>幅は階段幅以上を目安にする。900mm階段なら踊り場も900×900mm以上。</td></tr>
+<tr><th>手すり高さ</th><td>踏面先端からH800〜850mm程度。ゆったり見るならH850〜900mm。</td></tr>
+<tr><th>頭上高さ</th><td>階段上の有効高さは2000mm程度を目安にし、断面図でぶつからないか確認する。</td></tr>
+<tr><th>階段下</th><td>収納にするなら、高さが低い部分と使える部分を断面で分けて考える。</td></tr>
+</table>
+</section>
+<section class="card">
+<h2>図面での使い方</h2>
+<p>平面図では、上り方向、段数、踊り場、手すり位置を分かるように描くと伝わりやすいです。断面図では、蹴上・踏面・階高・頭上高さを合わせて確認すると、階段が実際に通れる形か判断しやすくなります。</p>
+<div class="notice">
+<p>このページの寸法は授業課題や検討用の参考値です。実施設計や確認申請では、先生の指示、法令集、仕様書、構造計算を必ず確認してください。</p>
+</div>
+</section>
+</main>
+<footer class="footer">
+<p>※授業課題・法規確認では、必ず先生の指示や法令集も確認してください。</p>
+<div class="footer-links"><a href="index.html">トップ</a>
+<a href="about.html">このサイトについて</a>
+<a href="privacy.html">プライバシーポリシー</a>
+<a href="disclaimer.html">免責事項</a>
+<a href="contact.html">お問い合わせ</a>
+<a href="koyagumi.html">小屋組の寸法まとめ</a>
+<a href="stairs.html">住宅階段の寸法まとめ</a>
+<a href="water.html">水回り寸法まとめ</a>
+<a href="section.html">木造断面図で描く部材まとめ</a>
+<a href="furniture.html">家具寸法まとめ</a>
+<a href="module.html">910モジュールの使い方</a>
+<a href="window.html">開口部・窓寸法まとめ</a>
+<a href="storage.html">収納寸法まとめ</a>
+</div>
+</footer>
+</body>
+</html>

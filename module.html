@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>910モジュールの使い方｜建築寸法メモ</title>
+<meta content="建築学生向けに、910モジュール、芯々寸法、有効幅、家具配置での考え方をまとめたページ。" name="description"/>
+<style>
+:root { --bg: #f6f3ee; --card: #fffaf2; --text: #23201c; --muted: #71675b; --line: #e1d7c8; --accent: #2f5f4f; --accent-light: #dcece5; --shadow: 0 12px 30px rgba(43, 36, 28, 0.08); --radius: 18px; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif; background: radial-gradient(circle at top left, #fff8e9 0, #f6f3ee 38%, #eee9e1 100%); color: var(--text); line-height: 1.75; }
+.app-header { padding: 34px 18px 24px; background: linear-gradient(135deg, #254f43, #5b7d69); color: white; }
+.app-header > div, .container, .footer { max-width: 900px; margin: 0 auto; }
+.eyebrow { margin: 0 0 4px; font-size: 0.82rem; letter-spacing: 0.12em; opacity: 0.85; }
+h1 { margin: 0; font-size: clamp(2rem, 7vw, 3.4rem); line-height: 1.08; }
+.lead { margin: 12px 0 0; max-width: 640px; opacity: 0.92; }
+.container { padding: 18px; }
+.card { background: rgba(255, 250, 242, 0.92); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; margin-top: 18px; }
+h2 { margin: 0 0 10px; color: var(--accent); }
+h3 { margin: 18px 0 8px; }
+p { margin: 0 0 12px; }
+ul { margin-top: 0; padding-left: 1.3em; }
+a { color: var(--accent); font-weight: 800; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.dim-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 12px; font-size: 0.95rem; }
+.dim-table th, .dim-table td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.dim-table th { color: var(--muted); width: 28%; }
+.notice { background: var(--accent-light); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.footer { padding: 20px 18px 36px; color: var(--muted); font-size: 0.9rem; }
+.footer-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.footer-links a { display: inline-block; padding: 9px 13px; border-radius: 999px; background: var(--accent-light); color: var(--accent); }
+@media (max-width: 640px) { .dim-table { font-size: 0.88rem; } .dim-table th, .dim-table td { padding: 8px 6px; } }
+</style>
+</head>
+<body>
+<header class="app-header">
+<div>
+<p class="eyebrow">建築学生向けメモ</p>
+<h1>910モジュールの使い方</h1>
+<p class="lead">木造住宅の平面図でよく使う910mmグリッドの考え方と、家具・廊下・水回りを置くときの注意点です。</p>
+</div>
+</header>
+<main class="container">
+<section class="card">
+<h2>910モジュールとは</h2>
+<p>910モジュールは、柱や壁の中心線を910mm間隔で考える木造住宅の基本的な寸法の取り方です。図面では「芯々910」として扱うことが多く、1マスを910mmとして部屋・廊下・収納などを整理しやすくなります。</p>
+<table class="dim-table">
+<tr><th>1マス</th><td>910mm。廊下、収納、開口、家具配置の基準にしやすい。</td></tr>
+<tr><th>1.5マス</th><td>1365mm。縁側、通路、収納前の余白などに使いやすい。</td></tr>
+<tr><th>2マス</th><td>1820mm。押入れ幅、掃き出し窓、ベッドまわり、洗面脱衣室などでよく使う。</td></tr>
+<tr><th>3マス</th><td>2730mm。子ども部屋や小さめの個室の一辺として扱いやすい。</td></tr>
+<tr><th>4マス</th><td>3640mm。6畳程度の部屋やLDKの一部を考えるときに使いやすい。</td></tr>
+</table>
+</section>
+<section class="card">
+<h2>芯々寸法と有効幅の違い</h2>
+<p>910mmは基本的に柱芯・壁芯の寸法として考えます。そのため、廊下を芯々910mmで描いても、実際に人が通れる有効幅は壁厚ぶん狭くなります。</p>
+<p>たとえば壁厚を120mm程度で表現する場合、芯々910mmの廊下は有効幅が約790mm前後になります。課題図面では芯々寸法で整えることが多いですが、家具や人の動きを見るときは有効幅も意識すると説得力が出ます。</p>
+<table class="dim-table">
+<tr><th>廊下</th><td>芯々910mmを基本にしやすい。有効幅は壁厚ぶん狭くなるため、ゆったり見せたい場所は1000〜1200mm程度も検討。</td></tr>
+<tr><th>収納</th><td>奥行600mmのクローゼットは、前の通路や扉の開きも合わせて見る。</td></tr>
+<tr><th>水回り</th><td>トイレは幅900mm前後、浴室は1616、洗面脱衣室は2畳程度など、910グリッドに合わせると整理しやすい。</td></tr>
+<tr><th>家具配置</th><td>家具本体だけでなく、椅子を引く600〜800mm、通路600〜900mmを残せるか確認する。</td></tr>
+</table>
+</section>
+<section class="card">
+<h2>図面で使うときのコツ</h2>
+<p>最初に910グリッドで大まかに部屋を割り、あとから家具寸法や開口位置を調整すると、平面図が崩れにくくなります。特に木造在来工法で考える場合、柱・梁・耐力壁の位置もグリッドに合わせると、構造の説明がしやすくなります。</p>
+<p>ただし、全部を910の倍数にする必要はありません。玄関、カフェ席、縁側、スキップフロアなど、使い方を優先したい場所では、グリッドを目安にしつつ少し寸法を調整しても大丈夫です。</p>
+<div class="notice">
+<p>このページの寸法は授業課題や検討用の参考値です。実施設計では、柱・壁厚・法規・構造条件・先生の指示に合わせて確認してください。</p>
+</div>
+</section>
+</main>
+<footer class="footer">
+<p>※授業課題・法規確認では、必ず先生の指示や法令集も確認してください。</p>
+<div class="footer-links"><a href="index.html">トップ</a>
+<a href="about.html">このサイトについて</a>
+<a href="privacy.html">プライバシーポリシー</a>
+<a href="disclaimer.html">免責事項</a>
+<a href="contact.html">お問い合わせ</a>
+<a href="koyagumi.html">小屋組の寸法まとめ</a>
+<a href="stairs.html">住宅階段の寸法まとめ</a>
+<a href="water.html">水回り寸法まとめ</a>
+<a href="section.html">木造断面図で描く部材まとめ</a>
+<a href="furniture.html">家具寸法まとめ</a>
+<a href="module.html">910モジュールの使い方</a>
+<a href="window.html">開口部・窓寸法まとめ</a>
+<a href="storage.html">収納寸法まとめ</a>
+</div>
+</footer>
+</body>
+</html>
